@@ -28,21 +28,27 @@ class Board extends Component {
     this.renderBoard();
   }
   generateDungeons() {
-    let border = 0;
+    let board = Array(parseInt(this.props.TOTAL_BLOCKS)).fill(0);
     let rows = this.state.rows;
     let columns = this.state.columns;
 
-    this.createRect(rows/2 - 5, columns/2 - 5, rows/2 + 5, columns/2 + 5);
-  }
-  createRect(x0, y0, x1, y1) {
-    let board = this.state.board.map((block, index) => {
-      if(this.getRow(index) >= x0 && this.getRow(index) <= x1)
-        if(this.getColumn(index) >= y0 && this.getColumn(index) <= y1)
-          if(this.state.board[index] == 0)
-            return 1;
-      return 0;
-    });
+    board = this.createRect(board, 0, 0, 10, 10);
+    board = this.createRect(board, rows/2 - 5, columns/2 - 5, rows/2 + 5, columns/2 + 5);
+
     this.setState({board: board});
+  }
+  createRect(board, x0, y0, x1, y1) {
+    return board.map((block, index) => {
+      if(this.getRow(index) >= x0 && this.getRow(index) <= x1 &&
+         this.getColumn(index) >= y0 && this.getColumn(index) <= y1 &&
+         board[index] == 0){
+          return 1;
+      } else if(board[index] == 1) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
   }
   isCorner(index, x0, y0, x1, y1) {
     if(this.getRow(index) == x0 && this.getColumn(index) == y0)
