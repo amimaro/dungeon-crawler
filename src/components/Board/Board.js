@@ -19,6 +19,7 @@ class Board extends Component {
     this.createRect = this.createRect.bind(this);
     this.isCorner = this.isCorner.bind(this);
     this.countWalls = this.countWalls.bind(this);
+    this.getRand = this.getRand.bind(this);
   }
   componentWillMount() {
     this.generateDungeons();
@@ -30,22 +31,18 @@ class Board extends Component {
     let border = 0;
     let rows = this.state.rows;
     let columns = this.state.columns;
-    while(border < 3) {
-      let board = this.state.board.map((block, index) => {
-        if(this.createRect(index, rows/2 - 5, columns/2 - 5, rows/2 + 5, columns/2 + 5))
-            return 1;
-        return 0;
-      });
-      this.setState({board: board});
-      border = 4;
-    }
+
+    this.createRect(rows/2 - 5, columns/2 - 5, rows/2 + 5, columns/2 + 5);
   }
-  createRect(index, x0, y0, x1, y1) {
-    if(this.getRow(index) >= x0 && this.getRow(index) <= x1)
-      if(this.getColumn(index) >= y0 && this.getColumn(index) <= y1)
-        if(this.state.board[index] == 0)
-          return true;
-    return false;
+  createRect(x0, y0, x1, y1) {
+    let board = this.state.board.map((block, index) => {
+      if(this.getRow(index) >= x0 && this.getRow(index) <= x1)
+        if(this.getColumn(index) >= y0 && this.getColumn(index) <= y1)
+          if(this.state.board[index] == 0)
+            return true;
+      return 0;
+    });
+    this.setState({board: board});
   }
   isCorner(index, x0, y0, x1, y1) {
     if(this.getRow(index) == x0 && this.getColumn(index) == y0)
@@ -85,6 +82,9 @@ class Board extends Component {
   getColumn(index) {
       return index % this.state.columns;
   }
+  getRand(max){
+    return Math.floor(Math.random() * max + 1);
+  }
   renderBoard() {
     let renderedBoard = this.state.board.map((block, index) => {
         return this.renderBlock({value: block, index: index});
@@ -92,7 +92,7 @@ class Board extends Component {
     this.setState({renderedBoard: renderedBoard});
   }
   renderBlock(block) {
-    return <Block value={block.value} key={block.index} index={block.index} walls={this.countWalls(block.index)}  />;
+    return <Block value={block.value} key={block.index} index={block.index} />;
   }
   render() {
     return (
