@@ -18,6 +18,7 @@ class Board extends Component {
     this.getColumn = this.getColumn.bind(this);
     this.createRect = this.createRect.bind(this);
     this.isCorner = this.isCorner.bind(this);
+    this.countWalls = this.countWalls.bind(this);
   }
   componentWillMount() {
     this.generateDungeons();
@@ -57,6 +58,27 @@ class Board extends Component {
       return true;
     return false;
   }
+  countWalls(index) {
+    let count = 0;
+    let row = this.getRow(index), column = this.getColumn(index);
+    if(this.state.board[index+1] === 0 && column < 99)
+      count ++;
+    if(this.state.board[index-1] === 0 && column > 0)
+      count ++;
+    if(this.state.board[index-100] == 0 && row > 0)
+      count ++;
+    if(this.state.board[index+100] == 0 && row < 99)
+      count ++;
+    if(this.state.board[index+99] == 0 && row < 99 && column > 0)
+      count ++;
+    if(this.state.board[index-99] == 0 && row > 0 && column < 99)
+      count ++;
+    if(this.state.board[index-101] == 0 && column > 0 && row > 0)
+      count ++;
+    if(this.state.board[index+101] == 0 && column < 99 && row < 99)
+      count ++;
+    return count;
+  }
   getRow(index) {
       return Math.floor(index/this.state.rows);
   }
@@ -70,7 +92,7 @@ class Board extends Component {
     this.setState({renderedBoard: renderedBoard});
   }
   renderBlock(block) {
-    return <Block value={block.value} key={block.index} index={block.index}  />;
+    return <Block value={block.value} key={block.index} index={block.index} walls={this.countWalls(block.index)}  />;
   }
   render() {
     return (
