@@ -41,6 +41,23 @@ class Board extends Component {
           j + this.getRand(5, 9));
       }
     }
+
+    let pivot = 5;
+    let direction = false;
+    for(let i = 10; i < 90; i++) {
+      board[pivot + 100 * this.getColumn(i)] = 1;
+      if(this.getRand(0,10) > 8) {
+        for(let j = 0; j < this.getRand(3,5); j++) {
+          if(direction)
+            pivot++;
+          else
+            pivot--;
+          board[pivot + 100 * this.getColumn(i)] = 1;
+        }
+        direction = !direction;
+      }
+    }
+
     this.setState({board: board});
   }
   createRect(board, x0, y0, x1, y1) {
@@ -104,7 +121,7 @@ class Board extends Component {
     this.setState({renderedBoard: renderedBoard});
   }
   renderBlock(block) {
-    return <Block value={block.value} key={block.index} index={block.index} />;
+    return <Block value={block.value} key={block.index} index={block.index} walls={this.countWalls(block.index)} />;
   }
   render() {
     return (
