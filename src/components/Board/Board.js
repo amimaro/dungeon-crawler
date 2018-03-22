@@ -31,10 +31,16 @@ class Board extends Component {
     let board = Array(parseInt(this.props.TOTAL_BLOCKS)).fill(0);
     let rows = this.state.rows;
     let columns = this.state.columns;
-
-    board = this.createRect(board, 0, 0, 10, 10);
-    board = this.createRect(board, rows/2 - 5, columns/2 - 5, rows/2 + 5, columns/2 + 5);
-
+    // board = this.createRect(board, rows/2 - 5, columns/2 - 5, rows/2 + 5, columns/2 + 5);
+    for(let i = 5; i < 99; i+=20) {
+      for(let j = 5; j < 99; j+=20) {
+        board = this.createRect(board,
+          i - this.getRand(1, 4),
+          j - this.getRand(1, 4),
+          i + this.getRand(5, 9),
+          j + this.getRand(5, 9));
+      }
+    }
     this.setState({board: board});
   }
   createRect(board, x0, y0, x1, y1) {
@@ -88,8 +94,8 @@ class Board extends Component {
   getColumn(index) {
       return index % this.state.columns;
   }
-  getRand(max){
-    return Math.floor(Math.random() * max + 1);
+  getRand(min, max){
+    return Math.floor(Math.random() * max + min);
   }
   renderBoard() {
     let renderedBoard = this.state.board.map((block, index) => {
