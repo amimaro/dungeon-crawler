@@ -1,50 +1,48 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class Block extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        block: ['red', 'blue']
+        block: ['lightgray', 'white', 'blue', 'red', 'green', 'orange', 'purple']
     }
   }
   render() {
     return (
-      <span style={{ backgroundColor: this.state.block[this.props.value] }}></span>
+        <div className="board-element" id={this.props.index} style={{ backgroundColor: this.state.block[this.props.value] }}>
+        </div>
     );
   }
 }
 
-class Map extends Component {
+class Board extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        board: Array(1000).fill(0)
+        board: Array(15000).fill(0),
+        renderedBoard: []
     }
     this.renderBoard = this.renderBoard.bind(this);
     this.renderBlock = this.renderBlock.bind(this);
   }
-  renderBoard() {
-    let rows = [];
-    this.state.board.map((block, index) => {
-      if(index === 10)
-        rows.push(this.renderBlock(1));
-      else if(index % 200 === 0)
-        rows.push(<br/>);
-      else
-        rows.push(this.renderBlock(block));
-    })
-    return rows;
+  componentWillMount() {
+    this.renderBoard();
   }
-  renderBlock(code) {
-    return <Block value={code} />;
+  renderBoard() {
+    let renderedBoard = this.state.board.map((block, index) => {
+        return this.renderBlock({value: block, index: index});
+    });
+    this.setState({renderedBoard: renderedBoard});
+  }
+  renderBlock(block) {
+    return <Block value={block.value} key={block.index} index={block.index}  />;
   }
   render() {
     return (
-      <div className="board">
-        {this.renderBoard()}
-      </div>
+        <div className="board">
+          {this.state.renderedBoard}
+        </div>
     );
   }
 }
@@ -56,7 +54,9 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">React Roguelike Dungeon Crawler</h1>
         </header>
-        <Map />
+        <div align="center" >          
+            <Board />
+        </div>
       </div>
     );
   }
