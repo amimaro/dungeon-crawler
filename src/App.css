@@ -31,20 +31,16 @@
 }
 
 .camera {
-  overflow: scroll;
-  width: 1000px;
-  height: 500px;
+  overflow: scroll;  
 }
 
 .board {
-    width: 1500px;
-    height: 500px;
     padding-top: 30px;
 }
 
 .board-element {
     width: 10px;
     height: 10px;
-    outline: 0px solid;
+    outline: 1px solid;
     float: left;
 }
