@@ -17,6 +17,7 @@ class Board extends Component {
     this.getRow = this.getRow.bind(this);
     this.getColumn = this.getColumn.bind(this);
     this.createRect = this.createRect.bind(this);
+    this.isCorner = this.isCorner.bind(this);
   }
   componentWillMount() {
     this.generateDungeons();
@@ -39,10 +40,21 @@ class Board extends Component {
     }
   }
   createRect(index, x0, y0, x1, y1) {
-    if(this.getRow(index) > x0 && this.getRow(index) < x1)
-      if(this.getColumn(index) > y0 && this.getColumn(index) < y1)
+    if(this.getRow(index) >= x0 && this.getRow(index) <= x1)
+      if(this.getColumn(index) >= y0 && this.getColumn(index) <= y1)
         if(this.state.board[index] == 0)
           return true;
+    return false;
+  }
+  isCorner(index, x0, y0, x1, y1) {
+    if(this.getRow(index) == x0 && this.getColumn(index) == y0)
+      return true;
+    if(this.getRow(index) == x1 && this.getColumn(index) == y1)
+      return true;
+    if(this.getRow(index) == x1 && this.getColumn(index) == y0)
+      return true;
+    if(this.getRow(index) == x0 && this.getColumn(index) == y1)
+      return true;
     return false;
   }
   getRow(index) {
