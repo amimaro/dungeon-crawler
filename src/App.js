@@ -11,7 +11,7 @@ class Block extends Component {
   }
   render() {
     return (
-      <span style={{ backgroundColor: this.state.block[this.props.value] }}>&nbsp;&nbsp;</span>
+      <span style={{ backgroundColor: this.state.block[this.props.value] }}></span>
     );
   }
 }
@@ -20,7 +20,7 @@ class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        board: Array(15000).fill(0)
+        board: Array(1000).fill(0)
     }
     this.renderBoard = this.renderBoard.bind(this);
     this.renderBlock = this.renderBlock.bind(this);
