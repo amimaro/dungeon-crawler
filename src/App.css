@@ -30,6 +30,12 @@
   }
 }
 
+.camera {
+  overflow: scroll;
+  width: 1000px;
+  height: 500px;
+}
+
 .board {
     width: 1500px;
     height: 500px;

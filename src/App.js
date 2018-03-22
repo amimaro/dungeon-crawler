@@ -54,8 +54,10 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">React Roguelike Dungeon Crawler</h1>
         </header>
-        <div align="center" >          
+        <div align="center" >
+          <div class="camera">
             <Board />
+          </div>
         </div>
       </div>
     );
