@@ -9,8 +9,8 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">React Roguelike Dungeon Crawler</h1>
         </header>
-        <div align="center" >
-          <div className="camera" style={{ width: '500px', height: '500px' }}>
+        <div align="centerRemoved" >
+          <div className="cameraRemoved" style={{ width: '500px', height: '500px' }}>
             <Board TOTAL_BLOCKS="10000" WIDTH="1000" HEIGHT="1000" BLOCK_SIZE="10"/>
           </div>
         </div>
