@@ -6,25 +6,25 @@ class Board extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        board: Array(parseInt(this.props.TOTAL_BLOCKS)).fill(0),
         renderedBoard: [],
+        board: Array(parseInt(this.props.TOTAL_BLOCKS)).fill(0),
         rows: this.props.TOTAL_BLOCKS / this.props.WIDTH * this.props.BLOCK_SIZE,
         columns: this.props.TOTAL_BLOCKS / this.props.HEIGHT * this.props.BLOCK_SIZE
     }
     this.renderBoard = this.renderBoard.bind(this);
     this.renderBoard = this.renderBoard.bind(this);
-    this.generateDungeon = this.generateDungeon.bind(this);
+    this.generateDungeons = this.generateDungeons.bind(this);
     this.getRow = this.getRow.bind(this);
     this.getColumn = this.getColumn.bind(this);
     this.createRect = this.createRect.bind(this);
   }
   componentWillMount() {
-    this.generateDungeon();
+    this.generateDungeons();
   }
   componentDidMount() {
     this.renderBoard();
   }
-  generateDungeon() {
+  generateDungeons() {
     let border = 0;
     let rows = this.state.rows;
     let columns = this.state.columns;
@@ -41,7 +41,8 @@ class Board extends Component {
   createRect(index, x0, y0, x1, y1) {
     if(this.getRow(index) > x0 && this.getRow(index) < x1)
       if(this.getColumn(index) > y0 && this.getColumn(index) < y1)
-       return true;
+        if(this.state.board[index] == 0)
+          return true;
     return false;
   }
   getRow(index) {
