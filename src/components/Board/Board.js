@@ -39,7 +39,7 @@ class Board extends Component {
       if(this.getRow(index) >= x0 && this.getRow(index) <= x1)
         if(this.getColumn(index) >= y0 && this.getColumn(index) <= y1)
           if(this.state.board[index] == 0)
-            return true;
+            return 1;
       return 0;
     });
     this.setState({board: board});
