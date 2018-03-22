@@ -21,13 +21,16 @@ class Board extends Component {
     super(props);
     this.state = {
         board: Array(parseInt(this.props.TOTAL_BLOCKS)).fill(0),
-        renderedBoard: []
+        renderedBoard: [],
+        rows: this.props.TOTAL_BLOCKS / this.props.WIDTH * this.props.BLOCK_SIZE,
+        columns: this.props.TOTAL_BLOCKS / this.props.HEIGHT * this.props.BLOCK_SIZE
     }
     this.renderBoard = this.renderBoard.bind(this);
     this.renderBoard = this.renderBoard.bind(this);
     this.generateDungeon = this.generateDungeon.bind(this);
     this.getRow = this.getRow.bind(this);
     this.getColumn = this.getColumn.bind(this);
+    this.createRect = this.createRect.bind(this);
   }
   componentWillMount() {
     this.generateDungeon();
@@ -37,12 +40,11 @@ class Board extends Component {
   }
   generateDungeon() {
     let border = 0;
-    let rows = this.props.TOTAL_BLOCKS / this.props.WIDTH * this.props.BLOCK_SIZE;
-    let columns = this.props.TOTAL_BLOCKS / this.props.HEIGHT * this.props.BLOCK_SIZE;
+    let rows = this.state.rows;
+    let columns = this.state.columns;
     while(border < 3) {
       let board = this.state.board.map((block, index) => {
-        if(this.getRow(index) > rows/2 - 5 && this.getRow(index) < rows/2 + 5)
-          if(this.getColumn(index) > columns/2 - 5 && this.getColumn(index) < columns/2 + 5)
+        if(this.createRect(index, rows/2 - 5, columns/2 - 5, rows/2 + 5, columns/2 + 5))
             return 1;
         return 0;
       });
@@ -50,11 +52,17 @@ class Board extends Component {
       border = 4;
     }
   }
+  createRect(index, x0, y0, x1, y1) {
+    if(this.getRow(index) > x0 && this.getRow(index) < x1)
+      if(this.getColumn(index) > y0 && this.getColumn(index) < y1)
+       return true;
+    return false;
+  }
   getRow(index) {
-      return Math.floor(index/100);
+      return Math.floor(index/this.state.rows);
   }
   getColumn(index) {
-      return index % 100;
+      return index % this.state.columns;
   }
   renderBoard() {
     let renderedBoard = this.state.board.map((block, index) => {
