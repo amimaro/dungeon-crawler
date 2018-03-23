@@ -46,7 +46,10 @@ class Board extends Component {
       }
     }
 
-    board = this.createElements(board, [0.2, 0.1, 0.05, 0.01], [3, 3, 3, 3]);
+    // Enemies
+    board = this.createElements(board, [0.01, 0.02, 0.03, 0.03, 0.03], [14, 13, 12, 11, 10]);
+    // Heals
+    board = this.createElements(board, [0.01, 0.01, 0.01, 0.01, 0.01], [24, 23, 22, 21, 20]);
 
     this.setState({board: board});
   }
@@ -93,25 +96,25 @@ class Board extends Component {
     }
     return board;
   }
-  createElements(board, chance = [0.1, 0.1, 0.1, 0.1], element = [0, 0, 0, 0]) {
+  createElements(board, chance = [0.1, 0.1, 0.1, 0.1, 0.1], element = [0, 0, 0, 0, 0]) {
     return board.map((block, index) => {
       let row = this.getRow(index);
       let column = this.getColumn(index);
-      if(row < 25) {
-        if(board[index] == 1 && this.countWalls(board, index) == 0 && Math.random() <= chance[0])
+      if(row < 20) {
+        if(board[index] == 1 && Math.random() <= chance[0])
           return element[0];
-      }
-      else if(row >= 25 && row < 50){
-        if(board[index] == 1 && this.countWalls(board, index) == 0 && Math.random() <= chance[1])
+      } else if(row >= 20 && row < 40){
+        if(board[index] == 1 && Math.random() <= chance[1])
           return element[1];
-      }
-      else if(row >= 50 && row < 75) {
-        if(board[index] == 1 && this.countWalls(board, index) == 0 && Math.random() <= chance[2])
+      } else if(row >= 40 && row < 60) {
+        if(board[index] == 1 && Math.random() <= chance[2])
           return element[2];
-      }
-      else if(row >= 75 && row < 100) {
-        if(board[index] == 1 && this.countWalls(board, index) == 0 && Math.random() <= chance[3])
+      } else if(row >= 60 && row < 80) {
+        if(board[index] == 1 && Math.random() <= chance[3])
           return element[3];
+      } else if(row >= 80) {
+        if(board[index] == 1 && Math.random() <= chance[4])
+          return element[4];
       }
       return board[index];
     });
