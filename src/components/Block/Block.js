@@ -12,34 +12,44 @@ class Block extends Component {
     let blocks = this.state.blocks;
 
     blocks[0] = 'LIGHTGRAY';
-    blocks[1] = 'WHITE'; //
-    blocks[2] = 'BLUE'; // Player
-    blocks[3] = 'INDIGO'; // Boss
+    blocks[1] = 'WHITE';
+    blocks[2] = 'BLACK';
 
+    // Enemies
     blocks[10] = 'LIGHTCORAL';
     blocks[11] = 'CRIMSON';
     blocks[12] = 'RED';
     blocks[13] = 'FIREBRICK';
     blocks[14] = 'DARKRED';
+    blocks[15] = 'INDIGO'; // Boss
 
+    // Heals
     blocks[20] = 'PALEGREEN';
     blocks[21] = 'MEDIUMSPRINGGREEN';
     blocks[22] = 'MEDIUMSEAGREEN';
     blocks[23] = 'FORESTGREEN';
     blocks[24] = 'DARKGREEN';
 
-
+    // Weapons
     blocks[30] = 'GRAY';
     blocks[31] = 'DIMGRAY';
     blocks[32] = 'LIGHTSLATEGRAY';
     blocks[33] = 'SLATEGRAY';
     blocks[34] = 'DARKSLATEGRAY';
 
+    // Player
+    blocks[40] = 'LIGHTSKYBLUE';
+    blocks[41] = 'DEEPSKYBLUE';
+    blocks[42] = 'DODGERBLUE';
+    blocks[43] = 'ROYALBLUE';
+    blocks[44] = 'MIDNIGHTBLUE';
+
     this.setState({blocks: blocks})
   }
   render() {
     return (
-        <div className="board-element" id={this.props.index} style={{ backgroundColor: this.state.blocks[this.props.value] }}>
+        <div className="board-element" id={this.props.index}
+          style={{ backgroundColor: this.state.blocks[this.props.value] }}>
         </div>
     );
   }
