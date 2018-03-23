@@ -21,6 +21,7 @@ class Board extends Component {
     this.countWalls = this.countWalls.bind(this);
     this.getRand = this.getRand.bind(this);
     this.createVerticalRandomPath = this.createVerticalRandomPath.bind(this);
+    this.createHorizontalRandomPath = this.createHorizontalRandomPath.bind(this);
   }
   componentWillMount() {
     this.generateDungeons();
@@ -34,6 +35,7 @@ class Board extends Component {
     let columns = this.state.columns;
 
     for(let i = 5; i < 99; i+=20) {
+      board = this.createHorizontalRandomPath(board, i);
       board = this.createVerticalRandomPath(board, i);
       for(let j = 5; j < 99; j+=20) {
         board = this.createRect(board,
@@ -59,6 +61,26 @@ class Board extends Component {
       }
     });
   }
+  createHorizontalRandomPath(board, pivot) {
+    let direction = false; // false - turn left; true - turn right
+    for(let i = 10; i < 90; i++) { // offset borders
+      if(this.getRand(0,10) > 8) { // 20% chance to turn to a direction
+        for(let j = 0; j < this.getRand(3,5); j++) { // walk up and down
+          if(direction){
+            pivot++;
+          } else if(this.getRow(i + 100 * pivot) == 0 ) { // Avoid borders
+            pivot++;
+          } else {
+            pivot--;
+          }
+          board[i + 100 * pivot] = 1;
+        }
+        direction = !direction; // toggle direction
+      }
+      board[i + 100 * pivot] = 1;
+    }
+    return board;
+  }
   createVerticalRandomPath(board, pivot) {
     let direction = false; // false - turn left; true - turn right
     for(let i = 10; i < 90; i++) { // offset borders
@@ -68,8 +90,6 @@ class Board extends Component {
             pivot++;
           } else if(this.getColumn(pivot + 100 * this.getColumn(i)) == 0 ) { // Avoid borders
             pivot++;
-          } else if(this.getColumn(pivot + 100 * this.getColumn(i)) == 99 ) { // Avoid borders
-            pivot--;
           } else {
             pivot--;
           }
