@@ -62,27 +62,31 @@ class Board extends Component {
   }
   createRandomPath(board, pivot, direction) {
     let turn = false; // false - turn left; true - turn right
+    let position = 0;
     for(let i = 10; i < 90; i++) { // offset borders
+      if(direction == 'horizontal')
+        position = i + 100 * pivot;
+      else if(direction == 'vertical')
+        position = pivot + 100 * i;
+      board[position] = 1;
       if(this.getRand(0,10) > 8) { // 20% chance to turn to a direction
         for(let j = 0; j < this.getRand(3,5); j++) { // walk up and down
-          if(turn){
-            pivot++;
-          } else if(this.getRow(i + 100 * pivot) == 0 ) { // Avoid borders
-            pivot++;
-          } else {
-            pivot--;
+          turn == true ? pivot++ : pivot--;
+          if(direction == 'horizontal') {
+            position = i + 100 * pivot;
+            if(this.getRow(position) == 0)
+              pivot++;
+            position = i + 100 * pivot;
+          } else if(direction == 'vertical'){
+            position = pivot + 100 * i;
+            if(this.getColumn(position) == 0)
+              pivot++;
+            position = pivot + 100 * i;
           }
-          if(direction == 'horizontal')
-            board[i + 100 * pivot] = 1;
-          else if(direction == 'vertical')
-            board[pivot + 100 * i] = 1;
+          board[position] = 1;
         }
         turn = !turn; // toggle direction
       }
-      if(direction == 'horizontal')
-        board[i + 100 * pivot] = 1;
-      else if(direction == 'vertical')
-        board[pivot + 100 * i] = 1;
     }
     return board;
   }
