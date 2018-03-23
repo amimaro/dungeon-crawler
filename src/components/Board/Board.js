@@ -17,7 +17,6 @@ class Board extends Component {
     this.getRow = this.getRow.bind(this);
     this.getColumn = this.getColumn.bind(this);
     this.createRect = this.createRect.bind(this);
-    this.isCorner = this.isCorner.bind(this);
     this.countWalls = this.countWalls.bind(this);
     this.getRand = this.getRand.bind(this);
     this.createRandomPath = this.createRandomPath.bind(this);
@@ -53,9 +52,9 @@ class Board extends Component {
     // Weapons
     board = this.createElements(board, [0.01, 0.01, 0.01, 0.01, 0.01], [34, 33, 32, 31, 30]);
     // Boss
-    board = this.createElements(board, [0.01, 0, 0, 0, 0], [3, 3, 3, 3, 3], 1);
+    board = this.createElements(board, [0.01, 0, 0, 0, 0], [15, 15, 15, 15, 15], 1);
     // Player
-    board = this.createElements(board, [0, 0, 0, 0, 0.01], [2, 2, 2, 2, 2], 1);
+    board = this.createElements(board, [0, 0, 0, 0, 0.01], [40, 40, 40, 40, 40], 1);
 
     this.setState({board: board});
   }
@@ -143,17 +142,6 @@ class Board extends Component {
       }
       return board[index];
     });
-  }
-  isCorner(index, x0, y0, x1, y1) {
-    if(this.getRow(index) == x0 && this.getColumn(index) == y0)
-      return true;
-    if(this.getRow(index) == x1 && this.getColumn(index) == y1)
-      return true;
-    if(this.getRow(index) == x1 && this.getColumn(index) == y0)
-      return true;
-    if(this.getRow(index) == x0 && this.getColumn(index) == y1)
-      return true;
-    return false;
   }
   countWalls(board, index) {
     let count = 0;
