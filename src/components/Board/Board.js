@@ -20,6 +20,7 @@ class Board extends Component {
     this.isCorner = this.isCorner.bind(this);
     this.countWalls = this.countWalls.bind(this);
     this.getRand = this.getRand.bind(this);
+    this.createVerticalRandomPath = this.createVerticalRandomPath.bind(this);
   }
   componentWillMount() {
     this.generateDungeons();
@@ -31,30 +32,15 @@ class Board extends Component {
     let board = Array(parseInt(this.props.TOTAL_BLOCKS)).fill(0);
     let rows = this.state.rows;
     let columns = this.state.columns;
-    // board = this.createRect(board, rows/2 - 5, columns/2 - 5, rows/2 + 5, columns/2 + 5);
+
     for(let i = 5; i < 99; i+=20) {
+      board = this.createVerticalRandomPath(board, i);
       for(let j = 5; j < 99; j+=20) {
         board = this.createRect(board,
           i - this.getRand(1, 4),
           j - this.getRand(1, 4),
           i + this.getRand(5, 9),
           j + this.getRand(5, 9));
-      }
-    }
-
-    let pivot = 5;
-    let direction = false;
-    for(let i = 10; i < 90; i++) {
-      board[pivot + 100 * this.getColumn(i)] = 1;
-      if(this.getRand(0,10) > 8) {
-        for(let j = 0; j < this.getRand(3,5); j++) {
-          if(direction)
-            pivot++;
-          else
-            pivot--;
-          board[pivot + 100 * this.getColumn(i)] = 1;
-        }
-        direction = !direction;
       }
     }
 
@@ -72,6 +58,28 @@ class Board extends Component {
         return 0;
       }
     });
+  }
+  createVerticalRandomPath(board, pivot) {
+    let direction = false; // false - turn left; true - turn right
+    for(let i = 10; i < 90; i++) { // offset borders
+      if(this.getRand(0,10) > 8) { // 20% chance to turn to a direction
+        for(let j = 0; j < this.getRand(3,5); j++) { // walk sideways
+          if(direction){
+            pivot++;
+          } else if(this.getColumn(pivot + 100 * this.getColumn(i)) == 0 ) { // Avoid borders
+            pivot++;
+          } else if(this.getColumn(pivot + 100 * this.getColumn(i)) == 99 ) { // Avoid borders
+            pivot--;
+          } else {
+            pivot--;
+          }
+          board[pivot + 100 * this.getColumn(i)] = 1;
+        }
+        direction = !direction; // toggle direction
+      }
+      board[pivot + 100 * this.getColumn(i)] = 1;
+    }
+    return board;
   }
   isCorner(index, x0, y0, x1, y1) {
     if(this.getRow(index) == x0 && this.getColumn(index) == y0)
