@@ -20,8 +20,7 @@ class Board extends Component {
     this.isCorner = this.isCorner.bind(this);
     this.countWalls = this.countWalls.bind(this);
     this.getRand = this.getRand.bind(this);
-    this.createVerticalRandomPath = this.createVerticalRandomPath.bind(this);
-    this.createHorizontalRandomPath = this.createHorizontalRandomPath.bind(this);
+    this.createRandomPath = this.createRandomPath.bind(this);
   }
   componentWillMount() {
     this.generateDungeons();
@@ -35,8 +34,8 @@ class Board extends Component {
     let columns = this.state.columns;
 
     for(let i = 5; i < 99; i+=20) {
-      board = this.createHorizontalRandomPath(board, i);
-      board = this.createVerticalRandomPath(board, i);
+      board = this.createRandomPath(board, i, 'horizontal');
+      board = this.createRandomPath(board, i, 'vertical');
       for(let j = 5; j < 99; j+=20) {
         board = this.createRect(board,
           i - this.getRand(1, 4),
@@ -61,43 +60,29 @@ class Board extends Component {
       }
     });
   }
-  createHorizontalRandomPath(board, pivot) {
-    let direction = false; // false - turn left; true - turn right
+  createRandomPath(board, pivot, direction) {
+    let turn = false; // false - turn left; true - turn right
     for(let i = 10; i < 90; i++) { // offset borders
       if(this.getRand(0,10) > 8) { // 20% chance to turn to a direction
         for(let j = 0; j < this.getRand(3,5); j++) { // walk up and down
-          if(direction){
+          if(turn){
             pivot++;
           } else if(this.getRow(i + 100 * pivot) == 0 ) { // Avoid borders
             pivot++;
           } else {
             pivot--;
           }
-          board[i + 100 * pivot] = 1;
+          if(direction == 'horizontal')
+            board[i + 100 * pivot] = 1;
+          else if(direction == 'vertical')
+            board[pivot + 100 * i] = 1;
         }
-        direction = !direction; // toggle direction
+        turn = !turn; // toggle direction
       }
-      board[i + 100 * pivot] = 1;
-    }
-    return board;
-  }
-  createVerticalRandomPath(board, pivot) {
-    let direction = false; // false - turn left; true - turn right
-    for(let i = 10; i < 90; i++) { // offset borders
-      if(this.getRand(0,10) > 8) { // 20% chance to turn to a direction
-        for(let j = 0; j < this.getRand(3,5); j++) { // walk sideways
-          if(direction){
-            pivot++;
-          } else if(this.getColumn(pivot + 100 * this.getColumn(i)) == 0 ) { // Avoid borders
-            pivot++;
-          } else {
-            pivot--;
-          }
-          board[pivot + 100 * this.getColumn(i)] = 1;
-        }
-        direction = !direction; // toggle direction
-      }
-      board[pivot + 100 * this.getColumn(i)] = 1;
+      if(direction == 'horizontal')
+        board[i + 100 * pivot] = 1;
+      else if(direction == 'vertical')
+        board[pivot + 100 * i] = 1;
     }
     return board;
   }
@@ -142,14 +127,14 @@ class Board extends Component {
   getRand(min, max){
     return Math.floor(Math.random() * max + min);
   }
+  renderBlock(block) {
+    return <Block value={block.value} key={block.index} index={block.index} walls={this.countWalls(block.index)} />;
+  }
   renderBoard() {
     let renderedBoard = this.state.board.map((block, index) => {
         return this.renderBlock({value: block, index: index});
     });
     this.setState({renderedBoard: renderedBoard});
-  }
-  renderBlock(block) {
-    return <Block value={block.value} key={block.index} index={block.index} walls={this.countWalls(block.index)} />;
   }
   render() {
     return (
