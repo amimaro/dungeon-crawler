@@ -52,6 +52,8 @@ class Board extends Component {
     board = this.createElements(board, [0.01, 0.01, 0.01, 0.01, 0.01], [24, 23, 22, 21, 20]);
     // Weapons
     board = this.createElements(board, [0.01, 0.01, 0.01, 0.01, 0.01], [34, 33, 32, 31, 30]);
+    // Boss
+    board = this.createElements(board, [0.01, 0, 0, 0, 0], [3, 3, 3, 3, 3], 1);
 
     this.setState({board: board});
   }
@@ -98,25 +100,44 @@ class Board extends Component {
     }
     return board;
   }
-  createElements(board, chance = [0.1, 0.1, 0.1, 0.1, 0.1], element = [0, 0, 0, 0, 0]) {
+  createElements(board, chance = [0.1, 0.1, 0.1, 0.1, 0.1], element = [0, 0, 0, 0, 0], quantity = -1) {
+    let count = 0;
     return board.map((block, index) => {
       let row = this.getRow(index);
       let column = this.getColumn(index);
+      if(quantity == count) {
+        return board[index];
+      }
       if(row < 20) {
-        if(board[index] == 1 && Math.random() <= chance[0])
+        if(board[index] == 1 && Math.random() <= chance[0]){
+          if(quantity > 0)
+            count++;
           return element[0];
+        }
       } else if(row >= 20 && row < 40){
-        if(board[index] == 1 && Math.random() <= chance[1])
+        if(board[index] == 1 && Math.random() <= chance[1]){
+          if(quantity > 0)
+            count++;
           return element[1];
+        }
       } else if(row >= 40 && row < 60) {
-        if(board[index] == 1 && Math.random() <= chance[2])
+        if(board[index] == 1 && Math.random() <= chance[2]){
+          if(quantity > 0)
+            count++;
           return element[2];
+        }
       } else if(row >= 60 && row < 80) {
-        if(board[index] == 1 && Math.random() <= chance[3])
+        if(board[index] == 1 && Math.random() <= chance[3]){
+          if(quantity > 0)
+            count++;
           return element[3];
+        }
       } else if(row >= 80) {
-        if(board[index] == 1 && Math.random() <= chance[4])
+        if(board[index] == 1 && Math.random() <= chance[4]){
+          if(quantity > 0)
+            count++;
           return element[4];
+        }
       }
       return board[index];
     });
