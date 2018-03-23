@@ -21,6 +21,7 @@ class Board extends Component {
     this.countWalls = this.countWalls.bind(this);
     this.getRand = this.getRand.bind(this);
     this.createRandomPath = this.createRandomPath.bind(this);
+    this.createEnemies = this.createEnemies.bind(this);
   }
   componentWillMount() {
     this.generateDungeons();
@@ -44,6 +45,8 @@ class Board extends Component {
           j + this.getRand(5, 9));
       }
     }
+
+    board = this.createEnemies(board);
 
     this.setState({board: board});
   }
@@ -90,6 +93,16 @@ class Board extends Component {
     }
     return board;
   }
+  createEnemies(board) {
+    return board.map((block, index) => {
+      let row = this.getRow(index);
+      let column = this.getColumn(index);
+      if(board[index] == 1 && this.countWalls(board, index) == 0 && this.getRand(0, 100) < 1) {
+        return 3;
+      }
+      return board[index];
+    });
+  }
   isCorner(index, x0, y0, x1, y1) {
     if(this.getRow(index) == x0 && this.getColumn(index) == y0)
       return true;
@@ -101,24 +114,24 @@ class Board extends Component {
       return true;
     return false;
   }
-  countWalls(index) {
+  countWalls(board, index) {
     let count = 0;
     let row = this.getRow(index), column = this.getColumn(index);
-    if(this.state.board[index+1] === 0 && column < 99)
+    if(board[index+1] === 0 && column < 99)
       count ++;
-    if(this.state.board[index-1] === 0 && column > 0)
+    if(board[index-1] === 0 && column > 0)
       count ++;
-    if(this.state.board[index-100] == 0 && row > 0)
+    if(board[index-100] == 0 && row > 0)
       count ++;
-    if(this.state.board[index+100] == 0 && row < 99)
+    if(board[index+100] == 0 && row < 99)
       count ++;
-    if(this.state.board[index+99] == 0 && row < 99 && column > 0)
+    if(board[index+99] == 0 && row < 99 && column > 0)
       count ++;
-    if(this.state.board[index-99] == 0 && row > 0 && column < 99)
+    if(board[index-99] == 0 && row > 0 && column < 99)
       count ++;
-    if(this.state.board[index-101] == 0 && column > 0 && row > 0)
+    if(board[index-101] == 0 && column > 0 && row > 0)
       count ++;
-    if(this.state.board[index+101] == 0 && column < 99 && row < 99)
+    if(board[index+101] == 0 && column < 99 && row < 99)
       count ++;
     return count;
   }
@@ -132,7 +145,7 @@ class Board extends Component {
     return Math.floor(Math.random() * max + min);
   }
   renderBlock(block) {
-    return <Block value={block.value} key={block.index} index={block.index} walls={this.countWalls(block.index)} />;
+    return <Block value={block.value} key={block.index} index={block.index} walls={this.countWalls(this.state.board, block.index)} />;
   }
   renderBoard() {
     let renderedBoard = this.state.board.map((block, index) => {
