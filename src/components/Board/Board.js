@@ -50,6 +50,8 @@ class Board extends Component {
     board = this.createElements(board, [0.01, 0.02, 0.03, 0.03, 0.03], [14, 13, 12, 11, 10]);
     // Heals
     board = this.createElements(board, [0.01, 0.01, 0.01, 0.01, 0.01], [24, 23, 22, 21, 20]);
+    // Weapons
+    board = this.createElements(board, [0.01, 0.01, 0.01, 0.01, 0.01], [34, 33, 32, 31, 30]);
 
     this.setState({board: board});
   }
