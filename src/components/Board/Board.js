@@ -54,6 +54,8 @@ class Board extends Component {
     board = this.createElements(board, [0.01, 0.01, 0.01, 0.01, 0.01], [34, 33, 32, 31, 30]);
     // Boss
     board = this.createElements(board, [0.01, 0, 0, 0, 0], [3, 3, 3, 3, 3], 1);
+    // Player
+    board = this.createElements(board, [0, 0, 0, 0, 0.01], [2, 2, 2, 2, 2], 1);
 
     this.setState({board: board});
   }
