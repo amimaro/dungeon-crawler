@@ -28,9 +28,10 @@ class Block extends Component {
     blocks[23] = 'FORESTGREEN';
     blocks[24] = 'DARKGREEN';
 
-    blocks[30] = 'SILVER';
-    blocks[31] = 'GRAY';
-    blocks[32] = 'DIMGRAY';
+
+    blocks[30] = 'GRAY';
+    blocks[31] = 'DIMGRAY';
+    blocks[32] = 'LIGHTSLATEGRAY';
     blocks[33] = 'SLATEGRAY';
     blocks[34] = 'DARKSLATEGRAY';
 
@@ -39,7 +40,6 @@ class Block extends Component {
   render() {
     return (
         <div className="board-element" id={this.props.index} style={{ backgroundColor: this.state.blocks[this.props.value] }}>
-          {this.props.walls}
         </div>
     );
   }
