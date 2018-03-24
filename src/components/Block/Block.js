@@ -65,7 +65,7 @@ class Block extends Component {
   }
   handleKeyPress = (event) => {
     let index = this.getIndex();
-    if (this.isPlayer(index)) {
+    if (this.isPlayer(index) || this.isPlayerAround(index) > 0) {
       this.move(event.keyCode);
     }
   }
@@ -91,9 +91,7 @@ class Block extends Component {
         break;
     }
     if (this.isPath(index + step) && step != 0) {
-      this.setColor(index + step, 40);
       this.setColor(index, 1);
-
     }
   }
   isPlayer(index) {
@@ -110,16 +108,15 @@ class Block extends Component {
     document.getElementById(index).style.backgroundColor = this.state.blocks[value];
     this.setValue(index, value);
   }
-  isPlayerAround() {
-    let i = this.getIndex();
-    if (this.isPlayer(i - 1)) // Player at left
-      return i - 1;
-    if (this.isPlayer(i + 1)) // Player at right
-      return i + 1;
-    if (this.isPlayer(i - 100)) // Player up
-      return i - 100;
-    if (this.isPlayer(i + 100)) // Player down
-      return i + 100;
+  isPlayerAround(index) {
+    if (this.isPlayer(index - 1)) // Player at left
+      return index - 1;
+    if (this.isPlayer(index + 1)) // Player at right
+      return index + 1;
+    if (this.isPlayer(index - 100)) // Player up
+      return index - 100;
+    if (this.isPlayer(index + 100)) // Player down
+      return index + 100;
     return 0;
   }
   getIndex() {
