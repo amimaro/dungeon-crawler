@@ -64,14 +64,14 @@ class Block extends Component {
     document.removeEventListener("keydown", this.handleKeyPress, false);
   }
   handleKeyPress = (event) => {
-    let index = this.props.index;
+    let index = this.getIndex();
     if (this.isPlayer(index)) {
       this.move(event.keyCode);
     }
   }
   move(keyCode) {
     let step = 0;
-    let index = this.props.index;
+    let index = this.getIndex();
     switch (keyCode) {
       case 37:
         console.log('left');
@@ -91,27 +91,26 @@ class Block extends Component {
         break;
     }
     if (this.isPath(index + step) && step != 0) {
-      document.getElementById(index + step).setAttribute('moved', 1)
       this.setColor(index + step, 40);
       this.setColor(index, 1);
     }
   }
   isPlayer(index) {
-    if (document.getElementById(index).getAttribute('value') >= 40 && document.getElementById(index).getAttribute('value') <= 44)
+    if (this.getValue(index) >= 40 && this.getValue(index) <= 44)
       return true;
     return false;
   }
   isPath(index) {
-    if (document.getElementById(index).getAttribute('value') == 1)
+    if (this.getValue(index) == 1)
       return true;
     return false;
   }
   setColor(index, value) {
     document.getElementById(index).style.backgroundColor = this.state.blocks[value];
-    document.getElementById(index).setAttribute('value', value);
+    this.setValue(index, value);
   }
   isPlayerAround() {
-    let i = this.props.index;
+    let i = this.getIndex();
     if (this.isPlayer(i - 1)) // Player at left
       return i - 1;
     if (this.isPlayer(i + 1)) // Player at right
@@ -122,7 +121,7 @@ class Block extends Component {
       return i + 100;
     return 0;
   }
-  this.getIndex() {
+  getIndex() {
     return this.props.index;
   }
   getValue(index) {
