@@ -17,6 +17,8 @@ class Block extends Component {
     this.setColor = this.setColor.bind(this);
     this.getAttribute = this.getAttribute.bind(this);
     this.setAttribute = this.setAttribute.bind(this);
+    this.getValue = this.getValue.bind(this);
+    this.setValue = this.setValue.bind(this);
   }
   componentWillMount() {
     let blocks = this.state.blocks;
@@ -118,6 +120,12 @@ class Block extends Component {
     if (this.isPlayer(i + 100)) // Player down
       return i + 100;
     return 0;
+  }
+  getValue(index) {
+    return this.getAttribute(index, 'value');
+  }
+  setValue(index, value) {
+    this.setAttribute(index, 'value', value);
   }
   getAttribute(index, attr) {
     return document.getElementById(index).getAttribute(attr);
