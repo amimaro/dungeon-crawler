@@ -21,6 +21,7 @@ class Board extends Component {
     this.createRandomPath = this.createRandomPath.bind(this);
     this.createElements = this.createElements.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.move = this.move.bind(this);
   }
   componentWillMount() {
     this.generateDungeons();
@@ -55,9 +56,7 @@ class Board extends Component {
     // Player
     board = this.createElements(board, [0, 0, 0, 0, 0.01], [40, 40, 40, 40, 40], 1);
 
-    let renderBoard = this.renderBoard(board);
-
-    this.setState({board: board, renderedBoard: renderBoard});
+    this.renderBoard(board);
   }
   createRect(board, x0, y0, x1, y1) {
     return board.map((block, index) => {
@@ -180,23 +179,38 @@ class Board extends Component {
     let renderedBoard = board.map((block, index) => {
         return this.renderBlock({value: block, index: index});
     });
-    return renderedBoard;
+    this.setState({board: board, renderedBoard: renderedBoard});
   }
   handleKeyPress = (event) => {
     switch(event.keyCode){
       case 37:
         console.log('left');
+        this.move(-1);
       break;
       case 38:
         console.log('up');
+        this.move(-100);
       break;
       case 39:
         console.log('right');
+        this.move(1);
       break;
       case 40:
         console.log('down');
+        this.move(100);
       break;
     }
+  }
+  move(step) {
+    let board = this.state.board;
+    for(let i = 0; i < board.length; i++) {
+      if(board[i] >= 40 && board[i] <= 44 && board[i + step] === 1){
+          board[i + step] = 40;
+          board[i] = 1;
+          break;
+      }
+    }
+    this.renderBoard(board);
   }
   render() {
     return (
