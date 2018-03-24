@@ -15,6 +15,7 @@ class Block extends Component {
     this.isPlayer = this.isPlayer.bind(this);
     this.isPath = this.isPath.bind(this);
     this.setColor = this.setColor.bind(this);
+    this.setValue = this.setValue.bind(this);
   }
   componentWillMount() {
     let blocks = this.state.blocks;
@@ -62,7 +63,7 @@ class Block extends Component {
     let index = this.props.index;
     if (this.isPlayer(index)) {
       this.move(event.keyCode);
-    } 
+    }
   }
   move(keyCode) {
     let step = 0;
@@ -101,11 +102,14 @@ class Block extends Component {
        return true;
     return false;
   }
-  setColor(color) {
-    document.getElementById(this.props.index).style.backgroundColor = this.state.blocks[color];
+  setColor(index = this.props.index, color) {
+    document.getElementById(index).style.backgroundColor = this.state.blocks[color];
+  }
+  setValue(index = this.props.index, value) {
+    document.getElementById(index).setAttribute('value', value);
   }
   isPlayerAround() {
-    let i = this.prop.index;
+    let i = this.props.index;
     if (this.isPlayer(i - 1)) // Player at left
       return i - 1;
     if (this.isPlayer(i + 1)) // Player at right
