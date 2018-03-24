@@ -49,7 +49,8 @@ class Block extends Component {
   render() {
     return (
         <div className="board-element" id={this.props.index}
-          style={{ backgroundColor: this.state.blocks[this.props.value] }}>
+          style={{ backgroundColor: this.state.blocks[this.props.value] }}
+          value={this.props.value} >
         </div>
     );
   }
