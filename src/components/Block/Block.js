@@ -15,6 +15,8 @@ class Block extends Component {
     this.isPlayer = this.isPlayer.bind(this);
     this.isPath = this.isPath.bind(this);
     this.setColor = this.setColor.bind(this);
+    this.getAttribute = this.getAttribute.bind(this);
+    this.setAttribute = this.setAttribute.bind(this);
   }
   componentWillMount() {
     let blocks = this.state.blocks;
@@ -86,8 +88,9 @@ class Block extends Component {
         break;
     }
     if (this.isPath(index + step) && step != 0) {
+      document.getElementById(index + step).setAttribute('moved', 1)
+      this.setColor(index + step, 40);
       this.setColor(index, 1);
-
     }
   }
   isPlayer(index) {
@@ -115,6 +118,12 @@ class Block extends Component {
     if (this.isPlayer(i + 100)) // Player down
       return i + 100;
     return 0;
+  }
+  getAttribute(index, attr) {
+    return document.getElementById(index).getAttribute(attr);
+  }
+  setAttribute(index, attr, value) {
+    document.getElementById(index).setAttribute(attr, value);
   }
   render() {
     return (<div className="board-element" id={this.props.index} style={{
