@@ -13,6 +13,7 @@ class Block extends Component {
     this.move = this.move.bind(this);
     this.isPlayerAround = this.isPlayerAround.bind(this);
     this.isPlayer = this.isPlayer.bind(this);
+    this.isPath = this.isPath.bind(this);
   }
   componentWillMount() {
     let blocks = this.state.blocks;
@@ -93,6 +94,11 @@ class Block extends Component {
   isPlayer(index) {
     if(document.getElementById(index).getAttribute('value') >= 40 ||
        document.getElementById(index).getAttribute('value') <= 44)
+       return true;
+    return false;
+  }
+  isPath(index) {
+    if(document.getElementById(index).getAttribute('value') === 1)
        return true;
     return false;
   }
