@@ -14,6 +14,7 @@ class Block extends Component {
     this.isPlayerAround = this.isPlayerAround.bind(this);
     this.isPlayer = this.isPlayer.bind(this);
     this.isPath = this.isPath.bind(this);
+    this.setColor = this.setColor.bind(this);
   }
   componentWillMount() {
     let blocks = this.state.blocks;
@@ -80,16 +81,20 @@ class Block extends Component {
     }
   }
   move(step) {
-    let board = this.state.board;
-    for (let i = 0; i < board.length; i++) {
-      if (board[i] >= 40 && board[i] <= 44 && board[i + step] === 1) {
-        document.getElementById(i).setAttribute("value", "1");
-        document.getElementById(i + step).setAttribute("value", 40);
-        // board[i + step] = 40;
-        // board[i] = 1;
-        break;
-      }
+    let index = this.props.index;
+    if(this.isPath(index + step)) {
+      this.setColor(1);
     }
+    // let board = this.state.board;
+    // for (let i = 0; i < board.length; i++) {
+    //   if (board[i] >= 40 && board[i] <= 44 && board[i + step] === 1) {
+    //     document.getElementById(i).setAttribute("value", "1");
+    //     document.getElementById(i + step).setAttribute("value", 40);
+    //     // board[i + step] = 40;
+    //     // board[i] = 1;
+    //     break;
+    //   }
+    // }
   }
   isPlayer(index) {
     if(document.getElementById(index).getAttribute('value') >= 40 ||
@@ -101,6 +106,9 @@ class Block extends Component {
     if(document.getElementById(index).getAttribute('value') === 1)
        return true;
     return false;
+  }
+  setColor(color) {
+    document.getElementById(this.props.index).getAttribute('background-color', this.props.blocks[color]);
   }
   isPlayerAround() {
     let i = this.prop.index;
