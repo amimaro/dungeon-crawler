@@ -100,8 +100,8 @@ class Block extends Component {
       return true;
     return false;
   }
-  setColor(index, color) {
-    document.getElementById(index).style.backgroundColor = this.state.blocks[color];
+  setColor(index, value) {
+    document.getElementById(index).style.backgroundColor = this.state.blocks[value];
     document.getElementById(index).setAttribute('value', value);
   }
   isPlayerAround() {
