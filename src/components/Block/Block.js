@@ -19,6 +19,7 @@ class Block extends Component {
     this.setAttribute = this.setAttribute.bind(this);
     this.getValue = this.getValue.bind(this);
     this.setValue = this.setValue.bind(this);
+    this.getIndex = this.getIndex.bind(this);
   }
   componentWillMount() {
     let blocks = this.state.blocks;
@@ -120,6 +121,9 @@ class Block extends Component {
     if (this.isPlayer(i + 100)) // Player down
       return i + 100;
     return 0;
+  }
+  this.getIndex() {
+    return this.props.index;
   }
   getValue(index) {
     return this.getAttribute(index, 'value');
