@@ -20,8 +20,6 @@ class Block extends Component {
     this.getValue = this.getValue.bind(this);
     this.setValue = this.setValue.bind(this);
     this.getIndex = this.getIndex.bind(this);
-    this.addListener = this.addListener.bind(this);
-    this.removeListener = this.removeListener.bind(this);
   }
   componentWillMount() {
     let blocks = this.state.blocks;
@@ -59,13 +57,11 @@ class Block extends Component {
     blocks[43] = 'ROYALBLUE';
     blocks[44] = 'MIDNIGHTBLUE';
 
-    if (this.props.value > 2)
-      this.addListener();
+    document.addEventListener("keydown", this.handleKeyPress, false);
     this.setState({blocks: blocks, value: this.props.value})
   }
   componentWillUnmount() {
-    if (this.props.value > 2)
-      this.removeListener();
+    document.removeEventListener("keydown", this.handleKeyPress, false);
   }
   handleKeyPress = (event) => {
     let index = this.getIndex();
@@ -97,6 +93,7 @@ class Block extends Component {
     if (this.isPath(index + step) && step != 0) {
       this.setColor(index + step, 40);
       this.setColor(index, 1);
+
     }
   }
   isPlayer(index) {
@@ -139,12 +136,6 @@ class Block extends Component {
   }
   setAttribute(index, attr, value) {
     document.getElementById(index).setAttribute(attr, value);
-  }
-  addListener() {
-    document.addEventListener("keydown", this.handleKeyPress, false);
-  }
-  removeListener() {
-    document.removeEventListener("keydown", this.handleKeyPress, false);
   }
   render() {
     return (<div className="board-element" id={this.props.index} style={{
