@@ -12,6 +12,7 @@ class Block extends Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.move = this.move.bind(this);
     this.isPlayerAround = this.isPlayerAround.bind(this);
+    this.isPlayer = this.isPlayer.bind(this);
   }
   componentWillMount() {
     let blocks = this.state.blocks;
@@ -88,6 +89,12 @@ class Block extends Component {
         break;
       }
     }
+  }
+  isPlayer(index) {
+    if(document.getElementById(index).getAttribute('value') >= 40 ||
+       document.getElementById(index).getAttribute('value') <= 44)
+       return true;
+    return false;
   }
   isPlayerAround() {
     let i = this.prop.index;
