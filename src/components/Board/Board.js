@@ -20,15 +20,9 @@ class Board extends Component {
     this.createRect = this.createRect.bind(this);
     this.createRandomPath = this.createRandomPath.bind(this);
     this.createElements = this.createElements.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.move = this.move.bind(this);
   }
   componentWillMount() {
     this.generateDungeons();
-    document.addEventListener("keydown", this.handleKeyPress, false);
-  }
-  componentWillUnmount(){
-    document.removeEventListener("keydown", this.handleKeyPress, false);
   }
   generateDungeons() {
     let board = Array(parseInt(this.props.TOTAL_BLOCKS, 10)).fill(0);
@@ -173,44 +167,16 @@ class Board extends Component {
     return Math.floor(Math.random() * max + min);
   }
   renderBlock(block) {
-    return <Block value={block.value} key={block.index} index={block.index} walls={this.countWalls(this.state.board, block.index)} />;
+    return <Block value={block.value}
+                  key={block.index}
+                  index={block.index}
+                  walls={this.countWalls(this.state.board, block.index)} />;
   }
   renderBoard(board) {
     let renderedBoard = board.map((block, index) => {
         return this.renderBlock({value: block, index: index});
     });
     this.setState({board: board, renderedBoard: renderedBoard});
-  }
-  handleKeyPress = (event) => {
-    switch(event.keyCode){
-      case 37:
-        console.log('left');
-        this.move(-1);
-      break;
-      case 38:
-        console.log('up');
-        this.move(-100);
-      break;
-      case 39:
-        console.log('right');
-        this.move(1);
-      break;
-      case 40:
-        console.log('down');
-        this.move(100);
-      break;
-    }
-  }
-  move(step) {
-    let board = this.state.board;
-    for(let i = 0; i < board.length; i++) {
-      if(board[i] >= 40 && board[i] <= 44 && board[i + step] === 1){
-          board[i + step] = 40;
-          board[i] = 1;
-          break;
-      }
-    }
-    this.renderBoard(board);
   }
   render() {
     return (

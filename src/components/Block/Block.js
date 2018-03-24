@@ -5,8 +5,12 @@ class Block extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        blocks: Array(40).fill('black')
+        blocks: Array(40).fill('black'),
+        value: 0
     }
+
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.move = this.move.bind(this);
   }
   componentWillMount() {
     let blocks = this.state.blocks;
@@ -44,13 +48,52 @@ class Block extends Component {
     blocks[43] = 'ROYALBLUE';
     blocks[44] = 'MIDNIGHTBLUE';
 
-    this.setState({blocks: blocks})
+    document.addEventListener("keydown", this.handleKeyPress, false);
+    this.setState({blocks: blocks, value: this.props.value})
+  }
+  componentWillUnmount(){
+    document.removeEventListener("keydown", this.handleKeyPress, false);
+  }
+  handleKeyPress = (event) => {
+    if(this.state.value >= 40 && this.state.value <= 44){
+      switch(event.keyCode){
+        case 37:
+        console.log('left');
+        // this.move(-1);
+        break;
+        case 38:
+        console.log('up');
+        // this.move(-100);
+        break;
+        case 39:
+        console.log('right');
+        // this.move(1);
+        break;
+        case 40:
+        console.log('down');
+        // this.move(100);
+        break;
+      }
+    }
+  }
+  move(step) {
+    let board = this.state.board;
+    for(let i = 0; i < board.length; i++) {
+      if(board[i] >= 40 && board[i] <= 44 && board[i + step] === 1){
+          document.getElementById(i).setAttribute("value", "1");
+          document.getElementById(i + step).setAttribute("value", 40);
+          // board[i + step] = 40;
+          // board[i] = 1;
+          break;
+      }
+    }
+    this.renderBoard(board);
   }
   render() {
     return (
         <div className="board-element" id={this.props.index}
-          style={{ backgroundColor: this.state.blocks[this.props.value] }}
-          value={this.props.value} >
+          style={{ backgroundColor: this.state.blocks[this.state.value] }}
+          value={this.state.value} >
         </div>
     );
   }
