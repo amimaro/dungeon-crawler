@@ -59,66 +59,60 @@ class Block extends Component {
     document.removeEventListener("keydown", this.handleKeyPress, false);
   }
   handleKeyPress = (event) => {
-    if (this.state.value >= 40 && this.state.value <= 44) {
-      switch (event.keyCode) {
-        case 37:
-          console.log('left');
-          this.move(-1);
-          break;
-        case 38:
-          console.log('up');
-          this.move(-100);
-          break;
-        case 39:
-          console.log('right');
-          this.move(1);
-          break;
-        case 40:
-          console.log('down');
-          this.move(100);
-          break;
-      }
-    }
-  }
-  move(step) {
     let index = this.props.index;
-    if(this.isPath(index + step)) {
-      this.setColor(1);
+    if (this.isPlayer(index)) {
+      this.move(event.keyCode);
+    } 
+  }
+  move(keyCode) {
+    let step = 0;
+    let index = this.props.index;
+    switch (keyCode) {
+      case 37:
+        console.log('left');
+        step = -1;
+        break;
+      case 38:
+        console.log('up');
+        step = -100;
+        break;
+      case 39:
+        console.log('right');
+        step = 1;
+        break;
+      case 40:
+        console.log('down');
+        step = 100;
+        break;
     }
-    // let board = this.state.board;
-    // for (let i = 0; i < board.length; i++) {
-    //   if (board[i] >= 40 && board[i] <= 44 && board[i + step] === 1) {
-    //     document.getElementById(i).setAttribute("value", "1");
-    //     document.getElementById(i + step).setAttribute("value", 40);
-    //     // board[i + step] = 40;
-    //     // board[i] = 1;
-    //     break;
-    //   }
-    // }
+    if(this.isPath(index + step) && step != 0) {
+      this.setColor(1);
+      this.setState({value: 1});
+    }
   }
   isPlayer(index) {
-    if(document.getElementById(index).getAttribute('value') >= 40 ||
+    if(document.getElementById(index).getAttribute('value') >= 40 &&
        document.getElementById(index).getAttribute('value') <= 44)
        return true;
     return false;
   }
   isPath(index) {
-    if(document.getElementById(index).getAttribute('value') === 1)
+    if(document.getElementById(index).getAttribute('value') == 1)
        return true;
     return false;
   }
   setColor(color) {
-    document.getElementById(this.props.index).getAttribute('background-color', this.props.blocks[color]);
+    document.getElementById(this.props.index).style.backgroundColor = this.state.blocks[color];
   }
   isPlayerAround() {
     let i = this.prop.index;
-    if (this.isPlayer(i - 1))
+    if (this.isPlayer(i - 1)) // Player at left
       return i - 1;
-    if (this.isPlayer(i + 1))
+    if (this.isPlayer(i + 1)) // Player at right
       return i + 1;
-    if (this.isPlayer(i - 100))
+    if (this.isPlayer(i - 100)) // Player up
       return i - 100;
-    if (this.isPlayer(i + 100))
+    if (this.isPlayer(i + 100)) // Player down
       return i + 100;
     return 0;
   }
