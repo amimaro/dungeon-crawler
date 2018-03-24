@@ -65,7 +65,7 @@ class Block extends Component {
   }
   handleKeyPress = (event) => {
     let index = this.getIndex();
-    if (this.isPlayer(index)) {
+    if (this.isPlayer(index) || (this.isPath(index) == true && this.isPlayerAround(index) != 0)) {
       this.move(event.keyCode);
     }
   }
@@ -92,11 +92,12 @@ class Block extends Component {
     }
     if(step != 0) {
       if (this.isPlayer(index) && this.isPath(index + step) == 1) {
+        this.setColor(index + step, 40);
         this.setColor(index, 1);
       }
-      // if(this.isPath(index)) {
-      //   console.log('isPath');
-      // }
+      if(this.isPath(index)) {
+        console.log('path ' + this.isPlayerAround(index))
+      }
     }
   }
   isPlayer(index) {
