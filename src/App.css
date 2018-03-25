@@ -31,5 +31,5 @@
 }
 
 .camera {
-  overflow: scroll;
+  overflow: hidden;
 }

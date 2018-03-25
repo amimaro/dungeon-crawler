@@ -4,6 +4,9 @@ import Board from './components/Board/Board';
 import Listener from './components/Listener/Listener';
 
 class App extends Component {
+  componentDidMount() {
+    document.getElementsByClassName('camera')[0].scrollIntoView(false);
+  }
   render() {
     return (
       <div className="App">
@@ -11,8 +14,8 @@ class App extends Component {
           <h1 className="App-title">React Roguelike Dungeon Crawler</h1>
         </header>
         <Listener></Listener>
-        <div align="centerRemoved" >
-          <div className="cameraRemoved" style={{ width: '500px', height: '500px' }}>
+        <div align="center" >
+          <div className="camera" style={{ width: 'width: 100%', height: '500px' }}>
             <Board TOTAL_BLOCKS="10000" WIDTH="1000" HEIGHT="1000" BLOCK_SIZE="10"/>
           </div>
         </div>
