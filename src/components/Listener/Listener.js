@@ -93,8 +93,9 @@ class Listener extends Component {
     }
   }
   move(origin, destination) {
-    origin.setValue(1);
-    destination.setValue(40);
+    this.setValue(origin, 1);
+    this.setValue(destination, 40);
+    console.log('moved from: ', this.getId(origin), ' to: ', this.getId(destination));
   }
   getPlayer() {
     return document.querySelector('[value="40"]')
