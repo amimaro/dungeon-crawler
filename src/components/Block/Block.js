@@ -18,8 +18,8 @@ class Block extends Component {
 
     // Enemies
     blocks[10] = 'LIGHTCORAL';
-    blocks[11] = 'CRIMSON';
-    blocks[12] = 'RED';
+    blocks[11] = 'RED';
+    blocks[12] = 'CRIMSON';
     blocks[13] = 'FIREBRICK';
     blocks[14] = 'DARKRED';
     blocks[15] = 'INDIGO'; // Boss
