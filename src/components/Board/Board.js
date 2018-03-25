@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './Board.css';
 import Block from '../Block/Block';
-import { Button } from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 
 class Board extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class Board extends Component {
       rows: this.props.TOTAL_BLOCKS / this.props.WIDTH * this.props.BLOCK_SIZE,
       columns: this.props.TOTAL_BLOCKS / this.props.HEIGHT * this.props.BLOCK_SIZE,
       isDark: false,
-      blocks: Array(40).fill('black'),
+      blocks: Array(40).fill('black')
     }
     this.getRow = this.getRow.bind(this);
     this.getColumn = this.getColumn.bind(this);
@@ -24,6 +24,7 @@ class Board extends Component {
     this.createRandomPath = this.createRandomPath.bind(this);
     this.createElements = this.createElements.bind(this);
     this.toggleDarkness = this.toggleDarkness.bind(this);
+    this.isPlayerView = this.isPlayerView.bind(this);
   }
   componentWillMount() {
     let blocks = this.state.blocks;
@@ -230,46 +231,59 @@ class Board extends Component {
     this.setState({board: board, renderedBoard: renderedBoard});
   }
   toggleDarkness() {
-    if(this.state.isDark) {
+    let playerId = document.querySelector('[value="40"]').getAttribute('id');
+    if (this.state.isDark) {
       console.log('isdark off');
-      for(let i = 0; i < this.props.TOTAL_BLOCKS; i++) {
-        let element =document.getElementById(i);
+      for (let i = 0; i < this.props.TOTAL_BLOCKS; i++) {
+        let element = document.getElementById(i);
         let elementValue = parseInt(element.getAttribute('value'));
-        if(elementValue < 40) {
+        if (elementValue < 40) {
           element.style.backgroundColor = this.state.blocks[elementValue];
         }
       }
     } else {
       console.log('isdark on');
-      for(let i = 0; i < this.props.TOTAL_BLOCKS; i++) {
-        let element =document.getElementById(i);
-        let elementValue = parseInt(element.getAttribute('value'));
-        if(elementValue < 40) {
+      for (let i = 0; i < this.props.TOTAL_BLOCKS; i++) {
+        let element = document.getElementById(i);
+        let elementId = parseInt(element.getAttribute('id'));
+        if (this.isPlayerView(playerId)) {
           element.style.backgroundColor = this.state.blocks[2];
         }
       }
     }
-    this.setState({isDark: !this.state.isDark});
+    this.setState({
+      isDark: !this.state.isDark
+    });
   }
   render() {
-    return (
-      <div>
-        <div className="board" style={{
-            width: this.props.WIDTH + 'px',
-            height: this.props.HEIGHT + 'px'
-          }} onKeyDown={this.handleKeyPress}>
-          {this.state.renderedBoard}
-        </div>
-        <div className="status">
-          <h4 style={{color: 'black'}}>Level: 0</h4>
-          <h4 style={{color: 'green'}}>HP: 100</h4>
-          <h4 style={{color: 'black'}}>Weapon: stick</h4>
-          <h4 style={{color: 'red'}}>Atack: 7</h4>
-          <p><Button>Restart</Button></p>
-          <p><Button onClick={this.toggleDarkness}>Toggle Darkness</Button></p>
-        </div>
+    return (<div>
+      <div className="board" style={{
+          width: this.props.WIDTH + 'px',
+          height: this.props.HEIGHT + 'px'
+        }} onKeyDown={this.handleKeyPress}>
+        {this.state.renderedBoard}
       </div>
-  );
+      <div className="status">
+        <h4 style={{
+            color: 'black'
+          }}>Level: 0</h4>
+        <h4 style={{
+            color: 'green'
+          }}>HP: 100</h4>
+        <h4 style={{
+            color: 'black'
+          }}>Weapon: stick</h4>
+        <h4 style={{
+            color: 'red'
+          }}>Atack: 7</h4>
+        <p>
+          <Button>Restart</Button>
+        </p>
+        <p>
+          <Button onClick={this.toggleDarkness}>Toggle Darkness</Button>
+        </p>
+      </div>
+    </div>);
   }
 }
 
