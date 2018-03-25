@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Board from './components/Board/Board';
 import Listener from './components/Listener/Listener';
-import { Button } from 'react-bootstrap';
 
 class App extends Component {
   render() {
@@ -25,14 +24,6 @@ class App extends Component {
           <div className="camera" style={{ width: 'width: 100%', height: '500px' }}>
             <Board TOTAL_BLOCKS="10000" WIDTH="1000" HEIGHT="1000" BLOCK_SIZE="10"/>
           </div>
-        </div>
-        <div className="status">
-          <h4 style={{color: 'black'}}>Level: 0</h4>
-          <h4 style={{color: 'green'}}>HP: 100</h4>
-          <h4 style={{color: 'black'}}>Weapon: stick</h4>
-          <h4 style={{color: 'red'}}>Atack: 7</h4>
-          <p><Button>Restart</Button></p>
-          <p><Button>Toggle Darkness</Button></p>
         </div>
       </div>
     );

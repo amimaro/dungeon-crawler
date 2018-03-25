@@ -1,3 +1,10 @@
 .board {
     padding-top: 30px;
 }
+
+.status {
+  text-align: left;
+  position: absolute;
+  top: 17%;
+  left: 1%;
+}

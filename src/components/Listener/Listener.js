@@ -59,7 +59,7 @@ class Listener extends Component {
     document.removeEventListener("keydown", this.handleKeyPress, false);
   }
   componentDidMount() {
-    // this.scrollTo(this.getPlayer());
+    this.scrollTo(this.getPlayer());
   }
   handleKeyPress = (event) => {
     let step = 0;

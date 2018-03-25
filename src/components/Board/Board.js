@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './Board.css';
 import Block from '../Block/Block';
+import { Button } from 'react-bootstrap';
 
 class Board extends Component {
   constructor(props) {
@@ -191,12 +192,24 @@ class Board extends Component {
     this.setState({board: board, renderedBoard: renderedBoard});
   }
   render() {
-    return (<div className="board" style={{
-        width: this.props.WIDTH + 'px',
-        height: this.props.HEIGHT + 'px'
-      }} onKeyDown={this.handleKeyPress}>
-      {this.state.renderedBoard}
-    </div>);
+    return (
+      <div>
+        <div className="board" style={{
+            width: this.props.WIDTH + 'px',
+            height: this.props.HEIGHT + 'px'
+          }} onKeyDown={this.handleKeyPress}>
+          {this.state.renderedBoard}
+        </div>
+        <div className="status">
+          <h4 style={{color: 'black'}}>Level: 0</h4>
+          <h4 style={{color: 'green'}}>HP: 100</h4>
+          <h4 style={{color: 'black'}}>Weapon: stick</h4>
+          <h4 style={{color: 'red'}}>Atack: 7</h4>
+          <p><Button>Restart</Button></p>
+          <p><Button>Toggle Darkness</Button></p>
+        </div>
+      </div>
+  );
   }
 }
 
