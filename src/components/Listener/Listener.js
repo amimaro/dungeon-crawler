@@ -15,6 +15,7 @@ class Listener extends Component {
     this.getValue = this.getValue.bind(this);
     this.getElementById = this.getElementById.bind(this);
     this.scrollTo = this.scrollTo.bind(this);
+    this.isPlayerView = this.isPlayerView.bind(this);
   }
   componentWillMount() {
     let blocks = this.state.blocks;
@@ -127,6 +128,39 @@ class Listener extends Component {
     if (view <= 0)
       view = 0;
     this.getElementById(view).scrollIntoView();
+  }
+  isPlayerView(playerId, blockId) {
+    let map = [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ];
+    for (let position of map) {
+      if (playerId == blockId)
+        return false;
+      if ((playerId + position) == blockId || (playerId - position) == blockId) {
+        return false;
+      }
+      if ((playerId + position * 100) == blockId || (playerId - position * 100) == blockId) {
+        return false;
+      }
+      for (let position2 of map) {
+        if (position <= (11 - position2)) {
+          let val1 = playerId + position + 100 * position2;
+          let val2 = playerId - position + 100 * position2;
+          let val3 = playerId - position - 100 * position2;
+          let val4 = playerId + position - 100 * position2;
+          if (val1 == blockId || val2 == blockId || val3 == blockId || val4 == blockId) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
   render() {
     return (<div></div>);
