@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  /*text-align: center;*/
 }
 
 .App-logo {
@@ -10,6 +10,22 @@
 .App-header {
   background-color: #222;
   padding: 20px;
+  color: white;
+}
+
+.App-footer {
+  text-align: center;
+  background-color: #222;
+  padding: 20px;
+  margin-top: 10px;
+  color: white;
+}
+
+.App-header a {
+  color: white;
+}
+
+.App-footer a {
   color: white;
 }
 
@@ -31,5 +47,6 @@
 }
 
 .camera {
+  margin-top: 10px;
   overflow: hidden;
 }
