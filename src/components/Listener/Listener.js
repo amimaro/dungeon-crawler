@@ -16,6 +16,8 @@ class Listener extends Component {
     this.getElementById = this.getElementById.bind(this);
     this.scrollTo = this.scrollTo.bind(this);
     this.isPlayerView = this.isPlayerView.bind(this);
+    this.setDarkness = this.setDarkness.bind(this);
+    this.unsetDarkness = this.unsetDarkness.bind(this);
   }
   componentWillMount() {
     let blocks = this.state.blocks;
@@ -60,6 +62,7 @@ class Listener extends Component {
     document.removeEventListener("keydown", this.handleKeyPress, false);
   }
   componentDidMount() {
+    this.setDarkness();
     this.scrollTo(this.getPlayer());
   }
   handleKeyPress = (event) => {
@@ -101,6 +104,7 @@ class Listener extends Component {
     this.setValue(origin, 1);
     this.setValue(destination, 40);
     this.scrollTo(destination);
+    this.setDarkness(destination);
     console.log('moved from: ', this.getId(origin), ' to: ', this.getId(destination));
   }
   getPlayer() {
@@ -129,7 +133,9 @@ class Listener extends Component {
       view = 0;
     this.getElementById(view).scrollIntoView();
   }
-  isPlayerView(playerId, blockId) {
+  isPlayerView(player, block) {
+    let blockId = parseInt(block.getAttribute('id'));
+    let playerId = parseInt(player.getAttribute('id'));
     let map = [
       1,
       2,
@@ -141,12 +147,12 @@ class Listener extends Component {
     ];
     for (let position of map) {
       if (playerId == blockId)
-        return false;
+        return true;
       if ((playerId + position) == blockId || (playerId - position) == blockId) {
-        return false;
+        return true;
       }
       if ((playerId + position * 100) == blockId || (playerId - position * 100) == blockId) {
-        return false;
+        return true;
       }
       for (let position2 of map) {
         if (position <= (11 - position2)) {
@@ -155,12 +161,28 @@ class Listener extends Component {
           let val3 = playerId - position - 100 * position2;
           let val4 = playerId + position - 100 * position2;
           if (val1 == blockId || val2 == blockId || val3 == blockId || val4 == blockId) {
-            return false;
+            return true;
           }
         }
       }
     }
-    return true;
+    return false;
+  }
+  setDarkness() {
+    let player = this.getPlayer();
+    Array.from(document.getElementsByClassName('board-element')).map((element) => {
+      if (!this.isPlayerView(player, element))
+        element.style.backgroundColor = this.state.blocks[2];
+      else
+        element.style.backgroundColor = this.state.blocks[this.getValue(element)];
+      return element;
+    });
+  }
+  unsetDarkness() {
+    Array.from(document.getElementsByClassName('board-element')).map((element) => {
+      element.style.backgroundColor = this.state.blocks[this.getValue(element)];
+      return element;
+    });
   }
   render() {
     return (<div></div>);
