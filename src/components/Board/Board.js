@@ -231,7 +231,7 @@ class Board extends Component {
     this.setState({board: board, renderedBoard: renderedBoard});
   }
   toggleDarkness() {
-    let playerId = document.querySelector('[value="40"]').getAttribute('id');
+    let playerId = parseInt(document.querySelector('[value="40"]').getAttribute('id'));
     if (this.state.isDark) {
       console.log('isdark off');
       for (let i = 0; i < this.props.TOTAL_BLOCKS; i++) {
@@ -246,7 +246,7 @@ class Board extends Component {
       for (let i = 0; i < this.props.TOTAL_BLOCKS; i++) {
         let element = document.getElementById(i);
         let elementId = parseInt(element.getAttribute('id'));
-        if (this.isPlayerView(playerId)) {
+        if (this.isPlayerView(playerId, elementId)) {
           element.style.backgroundColor = this.state.blocks[2];
         }
       }
@@ -254,6 +254,39 @@ class Board extends Component {
     this.setState({
       isDark: !this.state.isDark
     });
+  }
+  isPlayerView(playerId, blockId) {
+    let map = [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ];
+    for (let position of map) {
+      if (playerId == blockId)
+        return false;
+      if ((playerId + position) == blockId || (playerId - position) == blockId) {
+        return false;
+      }
+      if ((playerId + position * 100) == blockId || (playerId - position * 100) == blockId) {
+        return false;
+      }
+      for (let position2 of map) {
+        if (position <= (11 - position2)) {
+          let val1 = playerId + position + 100 * position2;
+          let val2 = playerId - position + 100 * position2;
+          let val3 = playerId - position - 100 * position2;
+          let val4 = playerId + position - 100 * position2;
+          if (val1 == blockId || val2 == blockId || val3 == blockId || val4 == blockId) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
   render() {
     return (<div>
