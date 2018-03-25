@@ -13,10 +13,11 @@ class Listener extends Component {
     this.setColor = this.setColor.bind(this);
     this.getAttribute = this.getAttribute.bind(this);
     this.setAttribute = this.setAttribute.bind(this);
-    this.getValue = this.getValue.bind(this);
     this.setValue = this.setValue.bind(this);
     this.getIndex = this.getIndex.bind(this);
     this.getPlayer = this.getPlayer.bind(this);
+    this.getId = this.getId.bind(this);
+    this.getValue = this.getValue.bind(this);
   }
   componentWillMount() {
     document.addEventListener("keydown", this.handleKeyPress, false);
@@ -49,7 +50,8 @@ class Listener extends Component {
         break;
     }
     if (step != 0) {
-      console.log(this.getPlayer());
+      let player = this.getPlayer();
+      if(player.getAttribute('id') + step)
       // if (this.isPlayer(index) && this.isPath(index + step) == 1) {
       //   this.setColor(index + step, 40);
       //   this.setColor(index, 1);
@@ -91,11 +93,17 @@ class Listener extends Component {
   getPlayer() {
     return document.querySelector('[value="40"]')
   }
+  getId(element) {
+    return element.getAttribute('id');
+  }
+  getElementValue(element) {
+
+  }
   getIndex() {
     return this.props.index;
   }
-  getValue(index) {
-    return this.getAttribute(index, 'value');
+  getValue(element) {
+    return element.getAttribute('value');
   }
   setValue(index, value) {
     this.setAttribute(index, 'value', value);
