@@ -59,7 +59,6 @@ class Listener extends Component {
   }
   handleKeyPress = (event) => {
     let step = 0;
-    let index = this.getIndex();
     switch (event.keyCode) {
       case 37:
         console.log('left pressed');
@@ -80,7 +79,7 @@ class Listener extends Component {
     }
     if (step != 0) {
       let player = this.getPlayer();
-      let playerId = parseInt(this.getId(player));
+      let playerId = this.getId(player);
       let nextElement = this.getElementById(playerId + step);
       switch (this.getValue(nextElement)) {
         case 0:
@@ -101,13 +100,13 @@ class Listener extends Component {
     return document.querySelector('[value="40"]')
   }
   getId(element) {
-    return element.getAttribute('id');
+    return parseInt(element.getAttribute('id'));
   }
   getElementById(id) {
     return document.getElementById(id);
   }
   getValue(element) {
-    return element.getAttribute('value');
+    return parseInt(element.getAttribute('value'));
   }
   setValue(element, value) {
     element.setAttribute('value', value);
