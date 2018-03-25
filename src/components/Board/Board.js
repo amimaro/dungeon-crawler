@@ -11,8 +11,6 @@ class Board extends Component {
       board: Array(parseInt(this.props.TOTAL_BLOCKS, 10)).fill(0),
       rows: this.props.TOTAL_BLOCKS / this.props.WIDTH * this.props.BLOCK_SIZE,
       columns: this.props.TOTAL_BLOCKS / this.props.HEIGHT * this.props.BLOCK_SIZE,
-      isDark: false,
-      blocks: Array(40).fill('black')
     }
     this.getRow = this.getRow.bind(this);
     this.getColumn = this.getColumn.bind(this);
@@ -23,45 +21,8 @@ class Board extends Component {
     this.createRect = this.createRect.bind(this);
     this.createRandomPath = this.createRandomPath.bind(this);
     this.createElements = this.createElements.bind(this);
-    this.toggleDarkness = this.toggleDarkness.bind(this);
-    this.isPlayerView = this.isPlayerView.bind(this);
   }
   componentWillMount() {
-    let blocks = this.state.blocks;
-
-    blocks[0] = 'LIGHTGRAY';
-    blocks[1] = 'WHITE';
-    blocks[2] = 'BLACK';
-
-    // Enemies
-    blocks[10] = 'LIGHTCORAL';
-    blocks[11] = 'RED';
-    blocks[12] = 'CRIMSON';
-    blocks[13] = 'FIREBRICK';
-    blocks[14] = 'DARKRED';
-    blocks[15] = 'INDIGO'; // Boss
-
-    // Heals
-    blocks[20] = 'PALEGREEN';
-    blocks[21] = 'MEDIUMSPRINGGREEN';
-    blocks[22] = 'MEDIUMSEAGREEN';
-    blocks[23] = 'FORESTGREEN';
-    blocks[24] = 'DARKGREEN';
-
-    // Weapons
-    blocks[30] = 'GRAY';
-    blocks[31] = 'DIMGRAY';
-    blocks[32] = 'LIGHTSLATEGRAY';
-    blocks[33] = 'SLATEGRAY';
-    blocks[34] = 'DARKSLATEGRAY';
-
-    // Player
-    blocks[40] = 'LIGHTSKYBLUE';
-    blocks[41] = 'DEEPSKYBLUE';
-    blocks[42] = 'DODGERBLUE';
-    blocks[43] = 'ROYALBLUE';
-    blocks[44] = 'MIDNIGHTBLUE';
-
     this.generateDungeons();
   }
   generateDungeons() {
@@ -230,64 +191,6 @@ class Board extends Component {
     });
     this.setState({board: board, renderedBoard: renderedBoard});
   }
-  toggleDarkness() {
-    let playerId = parseInt(document.querySelector('[value="40"]').getAttribute('id'));
-    if (this.state.isDark) {
-      console.log('isdark off');
-      for (let i = 0; i < this.props.TOTAL_BLOCKS; i++) {
-        let element = document.getElementById(i);
-        let elementValue = parseInt(element.getAttribute('value'));
-        if (elementValue < 40) {
-          element.style.backgroundColor = this.state.blocks[elementValue];
-        }
-      }
-    } else {
-      console.log('isdark on');
-      for (let i = 0; i < this.props.TOTAL_BLOCKS; i++) {
-        let element = document.getElementById(i);
-        let elementId = parseInt(element.getAttribute('id'));
-        if (this.isPlayerView(playerId, elementId)) {
-          element.style.backgroundColor = this.state.blocks[2];
-        }
-      }
-    }
-    this.setState({
-      isDark: !this.state.isDark
-    });
-  }
-  isPlayerView(playerId, blockId) {
-    let map = [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7
-    ];
-    for (let position of map) {
-      if (playerId == blockId)
-        return false;
-      if ((playerId + position) == blockId || (playerId - position) == blockId) {
-        return false;
-      }
-      if ((playerId + position * 100) == blockId || (playerId - position * 100) == blockId) {
-        return false;
-      }
-      for (let position2 of map) {
-        if (position <= (11 - position2)) {
-          let val1 = playerId + position + 100 * position2;
-          let val2 = playerId - position + 100 * position2;
-          let val3 = playerId - position - 100 * position2;
-          let val4 = playerId + position - 100 * position2;
-          if (val1 == blockId || val2 == blockId || val3 == blockId || val4 == blockId) {
-            return false;
-          }
-        }
-      }
-    }
-    return true;
-  }
   render() {
     return (<div>
       <div className="board" style={{
@@ -310,10 +213,10 @@ class Board extends Component {
             color: 'red'
           }}>Atack: 7</h4>
         <p>
-          <Button>Restart</Button>
+          <Button id="restart">Restart</Button>
         </p>
         <p>
-          <Button onClick={this.toggleDarkness}>Toggle Darkness</Button>
+          <Button id="toggle-darkness">Toggle Darkness</Button>
         </p>
       </div>
     </div>);

@@ -171,10 +171,10 @@ class Listener extends Component {
   setDarkness() {
     let player = this.getPlayer();
     Array.from(document.getElementsByClassName('board-element')).map((element) => {
-      if (!this.isPlayerView(player, element))
-        element.style.backgroundColor = this.state.blocks[2];
-      else
+      if (this.isPlayerView(player, element)) 
         element.style.backgroundColor = this.state.blocks[this.getValue(element)];
+      else
+        element.style.backgroundColor = this.state.blocks[2];
       return element;
     });
   }
