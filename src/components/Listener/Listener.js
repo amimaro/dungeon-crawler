@@ -18,6 +18,7 @@ class Listener extends Component {
     this.getPlayer = this.getPlayer.bind(this);
     this.getId = this.getId.bind(this);
     this.getValue = this.getValue.bind(this);
+    this.getElementById = this.getElementById.bind(this);
   }
   componentWillMount() {
     document.addEventListener("keydown", this.handleKeyPress, false);
@@ -51,7 +52,8 @@ class Listener extends Component {
     }
     if (step != 0) {
       let player = this.getPlayer();
-      if(player.getAttribute('id') + step)
+      let playerId = this.getId(player);
+      
       // if (this.isPlayer(index) && this.isPath(index + step) == 1) {
       //   this.setColor(index + step, 40);
       //   this.setColor(index, 1);
@@ -96,8 +98,8 @@ class Listener extends Component {
   getId(element) {
     return element.getAttribute('id');
   }
-  getElementValue(element) {
-
+  getElementById(id) {
+    return document.getElementById(id);
   }
   getIndex() {
     return this.props.index;
