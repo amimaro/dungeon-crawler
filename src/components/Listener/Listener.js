@@ -120,20 +120,13 @@ class Listener extends Component {
   }
   scrollTo(element) {
     let elementId = this.getId(element);
-    let offset = 1000, view = 0;
-    console.log('element: ' + elementId);
-    // if(elementId < 5000) {
-    //   console.log('Upper middle')
-    //   view = elementId - offset;
-    //   if(view <= 0)
-    //     view = 0;
-    // } else {
-    //   console.log('Lower middle');
-    //   view = elementId + offset;
-    //   if(view >= 9200)
-    //     view = 9200;
-    // }
-    this.getElementById(elementId).scrollIntoView();
+    let offset = 2500;
+    let view = elementId;
+    if (elementId <= 7500)
+      view = elementId - offset;
+    if (view <= 0)
+      view = 0;
+    this.getElementById(view).scrollIntoView();
   }
   render() {
     return (<div></div>);
