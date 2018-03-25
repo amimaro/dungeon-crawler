@@ -34,37 +34,31 @@ class Listener extends Component {
     let index = this.getIndex();
     switch (keyCode) {
       case 37:
-        console.log('left');
+        console.log('left pressed');
         step = -1;
         break;
       case 38:
-        console.log('up');
+        console.log('up pressed');
         step = -100;
         break;
       case 39:
-        console.log('right');
+        console.log('right pressed');
         step = 1;
         break;
       case 40:
-        console.log('down');
+        console.log('down pressed');
         step = 100;
         break;
     }
     if (step != 0) {
       let player = this.getPlayer();
-      let playerId = this.getId(player);
-      
-      // if (this.isPlayer(index) && this.isPath(index + step) == 1) {
-      //   this.setColor(index + step, 40);
-      //   this.setColor(index, 1);
-      // }
-      // if (this.isPath(index)) {
-      //   console.log('path ' + this.isPlayerAround(index))
-      //   this.setColor(index + step, 15);
-      // }
-      // if(this.isPath(index)) {
-      //   console.log('isPath');
-      // }
+      let playerId = parseInt(this.getId(player));
+      if(this.getValue(this.getElementById(playerId + step)) == 1) {
+        console.log('path');
+      }
+      if(this.getValue(this.getElementById(playerId + step)) == 0) {
+        console.log('wall');
+      }
     }
   }
   isPlayer(index) {
