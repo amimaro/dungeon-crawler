@@ -14,6 +14,7 @@ class Listener extends Component {
     this.getId = this.getId.bind(this);
     this.getValue = this.getValue.bind(this);
     this.getElementById = this.getElementById.bind(this);
+    this.scrollTo = this.scrollTo.bind(this);
   }
   componentWillMount() {
     let blocks = this.state.blocks;
@@ -57,6 +58,9 @@ class Listener extends Component {
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyPress, false);
   }
+  componentDidMount() {
+    this.scrollTo(this.getPlayer());
+  }
   handleKeyPress = (event) => {
     let step = 0;
     switch (event.keyCode) {
@@ -95,6 +99,7 @@ class Listener extends Component {
   move(origin, destination) {
     this.setValue(origin, 1);
     this.setValue(destination, 40);
+    this.scrollTo(destination);
     console.log('moved from: ', this.getId(origin), ' to: ', this.getId(destination));
   }
   getPlayer() {
@@ -112,6 +117,23 @@ class Listener extends Component {
   setValue(element, value) {
     element.setAttribute('value', value);
     element.style.backgroundColor = this.state.blocks[value];
+  }
+  scrollTo(element) {
+    let elementId = this.getId(element);
+    let offset = 1000, view = 0;
+    console.log('element: ' + elementId);
+    // if(elementId < 5000) {
+    //   console.log('Upper middle')
+    //   view = elementId - offset;
+    //   if(view <= 0)
+    //     view = 0;
+    // } else {
+    //   console.log('Lower middle');
+    //   view = elementId + offset;
+    //   if(view >= 9200)
+    //     view = 9200;
+    // }
+    this.getElementById(elementId).scrollIntoView();
   }
   render() {
     return (<div></div>);

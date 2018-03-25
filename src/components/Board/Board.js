@@ -36,23 +36,23 @@ class Board extends Component {
     }
 
     // Enemies
-    board = this.createElements(board, [
-      0.01, 0.02, 0.03, 0.03, 0.03
-    ], [14, 13, 12, 11, 10]);
-    // Heals
-    board = this.createElements(board, [
-      0.01, 0.01, 0.01, 0.01, 0.01
-    ], [24, 23, 22, 21, 20]);
-    // Weapons
-    board = this.createElements(board, [
-      0.01, 0.01, 0.01, 0.01, 0.01
-    ], [34, 33, 32, 31, 30]);
-    // Boss
-    board = this.createElements(board, [
-      0.01, 0, 0, 0, 0
-    ], [
-      15, 15, 15, 15, 15
-    ], 1);
+    // board = this.createElements(board, [
+    //   0.01, 0.02, 0.03, 0.03, 0.03
+    // ], [14, 13, 12, 11, 10]);
+    // // Heals
+    // board = this.createElements(board, [
+    //   0.01, 0.01, 0.01, 0.01, 0.01
+    // ], [24, 23, 22, 21, 20]);
+    // // Weapons
+    // board = this.createElements(board, [
+    //   0.01, 0.01, 0.01, 0.01, 0.01
+    // ], [34, 33, 32, 31, 30]);
+    // // Boss
+    // board = this.createElements(board, [
+    //   0.01, 0, 0, 0, 0
+    // ], [
+    //   15, 15, 15, 15, 15
+    // ], 1);
     // Player
     board = this.createElements(board, [
       0, 0, 0, 0, 0.01

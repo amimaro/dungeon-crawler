@@ -4,9 +4,6 @@ import Board from './components/Board/Board';
 import Listener from './components/Listener/Listener';
 
 class App extends Component {
-  componentDidMount() {
-    document.getElementsByClassName('camera')[0].scrollIntoView(false);
-  }
   render() {
     return (
       <div className="App">
