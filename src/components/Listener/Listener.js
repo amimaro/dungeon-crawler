@@ -16,6 +16,7 @@ class Listener extends Component {
     this.getValue = this.getValue.bind(this);
     this.setValue = this.setValue.bind(this);
     this.getIndex = this.getIndex.bind(this);
+    this.getPlayer = this.getPlayer.bind(this);
   }
   componentWillMount() {
     document.addEventListener("keydown", this.handleKeyPress, false);
@@ -24,10 +25,7 @@ class Listener extends Component {
     document.removeEventListener("keydown", this.handleKeyPress, false);
   }
   handleKeyPress = (event) => {
-    let index = this.getIndex();
-    if (this.isPlayer(index) || (this.isPath(index) == true && this.isPlayerAround(index) != 0)) {
-      this.move(event.keyCode);
-    }
+    this.move(event.keyCode);
   }
   move(keyCode) {
     let step = 0;
@@ -51,14 +49,15 @@ class Listener extends Component {
         break;
     }
     if (step != 0) {
-      if (this.isPlayer(index) && this.isPath(index + step) == 1) {
-        this.setColor(index + step, 40);
-        this.setColor(index, 1);
-      }
-      if (this.isPath(index)) {
-        console.log('path ' + this.isPlayerAround(index))
-        this.setColor(index + step, 15);
-      }
+      console.log(this.getPlayer());
+      // if (this.isPlayer(index) && this.isPath(index + step) == 1) {
+      //   this.setColor(index + step, 40);
+      //   this.setColor(index, 1);
+      // }
+      // if (this.isPath(index)) {
+      //   console.log('path ' + this.isPlayerAround(index))
+      //   this.setColor(index + step, 15);
+      // }
       // if(this.isPath(index)) {
       //   console.log('isPath');
       // }
@@ -88,6 +87,9 @@ class Listener extends Component {
     if (this.isPlayer(index + 100)) // Player down
       return index + 100;
     return 0;
+  }
+  getPlayer() {
+    return document.querySelector('[value="40"]')
   }
   getIndex() {
     return this.props.index;
