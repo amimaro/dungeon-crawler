@@ -4,7 +4,8 @@ class Listener extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      blocks: Array(40).fill('black')
+      blocks: Array(40).fill('black'),
+      isDark: true
     }
 
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -18,6 +19,8 @@ class Listener extends Component {
     this.isPlayerView = this.isPlayerView.bind(this);
     this.setDarkness = this.setDarkness.bind(this);
     this.unsetDarkness = this.unsetDarkness.bind(this);
+    this.toggleDarkness = this.toggleDarkness.bind(this);
+    this.reset = this.reset.bind(this);
   }
   componentWillMount() {
     let blocks = this.state.blocks;
@@ -60,8 +63,12 @@ class Listener extends Component {
   }
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyPress, false);
+    document.getElementById('toggle-darkness').removeEventListener("click", this.handleKeyPress, false);
+    document.getElementById('reset').removeEventListener("click", this.handleKeyPress, false);
   }
   componentDidMount() {
+    document.getElementById('toggle-darkness').addEventListener("click", this.toggleDarkness, false);
+    document.getElementById('reset').addEventListener("click", this.reset, false);
     this.setDarkness();
     this.scrollTo(this.getPlayer());
   }
@@ -104,7 +111,8 @@ class Listener extends Component {
     this.setValue(origin, 1);
     this.setValue(destination, 40);
     this.scrollTo(destination);
-    this.setDarkness(destination);
+    if(this.state.isDark)
+      this.setDarkness(destination);
     console.log('moved from: ', this.getId(origin), ' to: ', this.getId(destination));
   }
   getPlayer() {
@@ -168,21 +176,35 @@ class Listener extends Component {
     }
     return false;
   }
+  toggleDarkness() {
+    if (this.state.isDark) {
+      this.unsetDarkness();
+    } else {
+      this.setDarkness();
+    }
+  }
   setDarkness() {
+    console.log('set darkness');
     let player = this.getPlayer();
     Array.from(document.getElementsByClassName('board-element')).map((element) => {
-      if (this.isPlayerView(player, element)) 
+      if (this.isPlayerView(player, element))
         element.style.backgroundColor = this.state.blocks[this.getValue(element)];
       else
         element.style.backgroundColor = this.state.blocks[2];
       return element;
     });
+    this.setState({isDark: true});
   }
   unsetDarkness() {
+    console.log('unset darkness');
     Array.from(document.getElementsByClassName('board-element')).map((element) => {
       element.style.backgroundColor = this.state.blocks[this.getValue(element)];
       return element;
     });
+    this.setState({isDark: false});
+  }
+  reset() {
+    console.log('reset');
   }
   render() {
     return (<div></div>);

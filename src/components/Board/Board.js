@@ -213,7 +213,7 @@ class Board extends Component {
             color: 'red'
           }}>Atack: 7</h4>
         <p>
-          <Button id="restart">Restart</Button>
+          <Button id="reset">Restart</Button>
         </p>
         <p>
           <Button id="toggle-darkness">Toggle Darkness</Button>
