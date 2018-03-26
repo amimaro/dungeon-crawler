@@ -216,6 +216,10 @@ class Board extends Component {
           <Button id="toggle-darkness">Toggle Darkness</Button>
         </p>
       </div>
+      <div className="panel" style={{display: 'none'}}>
+        <h1 id="panel-msg"></h1>
+        <h4>Please, press F5 to restart game.</h4>
+      </div>
     </div>);
   }
 }
