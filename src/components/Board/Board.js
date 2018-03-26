@@ -215,6 +215,9 @@ class Board extends Component {
         <p>
           <Button id="toggle-darkness">Toggle Darkness</Button>
         </p>
+        <h4 style={{
+            color: 'black'
+          }}>Event: <span id="dc-event">...</span></h4>
       </div>
       <div id="panel-display" style={{display : 'none'}}>
         <h1 id="panel-msg">Test</h1>
