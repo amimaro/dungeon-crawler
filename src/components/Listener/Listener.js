@@ -104,15 +104,17 @@ class Listener extends Component {
         console.log('down pressed');
         step = 100;
         break;
+      default:
+        break;
     }
-    if (step != 0) {
+    if (step !== 0) {
       let player = this.getPlayer();
       let playerId = this.getId(player);
       let nextElement = this.getElementById(playerId + step);
       let nextValue = this.getValue(nextElement);
-      if(nextValue == 0) { // if wall
+      if(nextValue === 0) { // if wall
         console.log('wall');
-      } else if (nextValue == 1) { // if path
+      } else if (nextValue === 1) { // if path
         console.log('path');
         this.move(player, nextElement);
       } else if(nextValue >= 20 && nextValue <= 24) { // if heal
@@ -153,14 +155,14 @@ class Listener extends Component {
     let playerStatus = this.state.storage.player;
     let enemies = this.state.storage.enemies;
     let enemyObj = enemies.find(o => o.id === this.getId(enemy));
-    if(enemyObj == undefined){
+    if(enemyObj === undefined){
       enemyObj = {id: this.getId(enemy), level: this.getValue(enemy) - 9, hp:  2**(this.getValue(enemy) - 7), atack: 2**(this.getValue(enemy) - 8)};
       enemies.push(enemyObj);
     } else {
       console.log('enemy already listed');
     }
     enemies.map((element) => {
-      if(element.id == this.getId(enemy)){
+      if(element.id === this.getId(enemy)){
         element.hp -= playerStatus.atack;
         playerStatus.hp -= element.atack;
         if(playerStatus.hp <= 0) { // player dies
@@ -172,7 +174,7 @@ class Listener extends Component {
           console.log('enemy killed');
           this.setValue(enemy, 1);
           this.move(player, enemy);
-          if(this.getValue(enemy) == 15) {
+          if(this.getValue(enemy) === 15) {
             console.log('BOSS KILLED');
             document.removeEventListener("keydown", this.handleKeyPress, false);
             this.gameover('Congratulations!');
@@ -213,13 +215,13 @@ class Listener extends Component {
     return document.querySelector('[value="40"]')
   }
   getId(element) {
-    return parseInt(element.getAttribute('id'));
+    return parseInt(element.getAttribute('id'), 10);
   }
   getElementById(id) {
     return document.getElementById(id);
   }
   getValue(element) {
-    return parseInt(element.getAttribute('value'));
+    return parseInt(element.getAttribute('value'), 10);
   }
   setValue(element, value) {
     element.setAttribute('value', value);
@@ -236,8 +238,8 @@ class Listener extends Component {
     this.getElementById(view).scrollIntoView();
   }
   isPlayerView(player, block) {
-    let blockId = parseInt(block.getAttribute('id'));
-    let playerId = parseInt(player.getAttribute('id'));
+    let blockId = parseInt(block.getAttribute('id'), 10);
+    let playerId = parseInt(player.getAttribute('id'), 10);
     let map = [
       1,
       2,
@@ -248,12 +250,12 @@ class Listener extends Component {
       7
     ];
     for (let position of map) {
-      if (playerId == blockId)
+      if (playerId === blockId)
         return true;
-      if ((playerId + position) == blockId || (playerId - position) == blockId) {
+      if ((playerId + position) === blockId || (playerId - position) === blockId) {
         return true;
       }
-      if ((playerId + position * 100) == blockId || (playerId - position * 100) == blockId) {
+      if ((playerId + position * 100) === blockId || (playerId - position * 100) === blockId) {
         return true;
       }
       for (let position2 of map) {
@@ -262,7 +264,7 @@ class Listener extends Component {
           let val2 = playerId - position + 100 * position2;
           let val3 = playerId - position - 100 * position2;
           let val4 = playerId + position - 100 * position2;
-          if (val1 == blockId || val2 == blockId || val3 == blockId || val4 == blockId) {
+          if (val1 === blockId || val2 === blockId || val3 === blockId || val4 === blockId) {
             return true;
           }
         }

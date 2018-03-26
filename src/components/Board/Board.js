@@ -217,7 +217,7 @@ class Board extends Component {
         </p>
       </div>
       <div id="panel-display" style={{display : 'none'}}>
-        <h1 id="panel-msg"></h1>
+        <h1 id="panel-msg">Test</h1>
         <h4>Please, press F5 to restart game.</h4>
       </div>
     </div>);

@@ -13,18 +13,18 @@ class App extends Component {
         </a>
         <header className="App-header">
           <p>
-            <a href="https://www.freecodecamp.org/challenges/build-a-roguelike-dungeon-crawler-game" target="_blank">
+            <a href="https://www.freecodecamp.org/challenges/build-a-roguelike-dungeon-crawler-game" target="_blank" rel="noopener noreferrer">
               React Roguelike Dungeon Crawler
             </a>
           </p>
-          <p>by <a href="https://github.com/amimaro" target="_blank">amimaro</a></p>
+          <p>by <a href="https://github.com/amimaro" target="_blank" rel="noopener noreferrer">amimaro</a></p>
         </header>
         <Listener></Listener>
-        <div align="center" >
-          <div className="camera" style={{ width: 'width: 100%', height: '500px' }}>
+        <center>
+          <div className="camera" style={{ width: '100%', height: '500px' }}>
             <Board TOTAL_BLOCKS="10000" WIDTH="1000" HEIGHT="1000" BLOCK_SIZE="10"/>
           </div>
-        </div>
+        </center>
       </div>
     );
   }
