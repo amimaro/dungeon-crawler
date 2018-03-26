@@ -21,10 +21,20 @@ class Listener extends Component {
     this.unsetDarkness = this.unsetDarkness.bind(this);
     this.toggleDarkness = this.toggleDarkness.bind(this);
     this.reset = this.reset.bind(this);
+
+    this.state.storage = {
+      player: {
+        level: 1,
+        xp: 0,
+        hp: 100,
+        atack: 5
+      },
+      enemies: {}
+    };
   }
   componentWillMount() {
     let blocks = this.state.blocks;
-
+    console.log(this.state.storage);
     blocks[0] = 'LIGHTGRAY';
     blocks[1] = 'WHITE';
     blocks[2] = 'BLACK';
