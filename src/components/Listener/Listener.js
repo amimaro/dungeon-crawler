@@ -19,8 +19,7 @@ class Listener extends Component {
     this.isPlayerView = this.isPlayerView.bind(this);
     this.setDarkness = this.setDarkness.bind(this);
     this.unsetDarkness = this.unsetDarkness.bind(this);
-    this.toggleDarkness = this.toggleDarkness.bind(this);
-    this.reset = this.reset.bind(this);
+    this.toggleDarkness = this.toggleDarkness.bind(this);    
 
     this.state.storage = {
       player: {
@@ -212,9 +211,6 @@ class Listener extends Component {
       return element;
     });
     this.setState({isDark: false});
-  }
-  reset() {
-    console.log('reset');
   }
   render() {
     return (<div></div>);

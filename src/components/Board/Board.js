@@ -211,10 +211,7 @@ class Board extends Component {
           }}>Weapon: stick</h4>
         <h4 style={{
             color: 'red'
-          }}>Atack: 7</h4>
-        <p>
-          <Button id="reset">Restart</Button>
-        </p>
+          }}>Atack: 7</h4>    
         <p>
           <Button id="toggle-darkness">Toggle Darkness</Button>
         </p>
