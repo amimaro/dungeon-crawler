@@ -23,6 +23,7 @@ class Listener extends Component {
     this.updateGameStatus = this.updateGameStatus.bind(this);
     this.heal = this.heal.bind(this);
     this.powerup = this.powerup.bind(this);
+    this.enemy = this.enemy.bind(this);
 
     this.state.storage = {
       player: {
@@ -31,12 +32,12 @@ class Listener extends Component {
         hp: 100,
         atack: 5,
       },
-      enemies: {}
+      enemies: []
     };
   }
   componentWillMount() {
     let blocks = this.state.blocks;
-    console.log(this.state.storage);
+
     blocks[0] = 'LIGHTGRAY';
     blocks[1] = 'WHITE';
     blocks[2] = 'BLACK';
@@ -119,6 +120,8 @@ class Listener extends Component {
       } else if(nextValue >= 30 && nextValue <= 34) { // if powerup
         this.powerup(1 + nextValue - 30);
         this.move(player, nextElement);
+      } else if(nextValue >= 10 && nextValue <= 15) { // if enemy
+        this.enemy(player, nextElement);
       }
     }
   }
@@ -141,6 +144,36 @@ class Listener extends Component {
     let gameStatus = this.state.storage;
     gameStatus.player.atack += powerId;
     this.setState({storage: gameStatus}, this.updateGameStatus());
+  }
+  enemy(player, enemy) {
+    console.log('enemy: ' + this.getValue(enemy))
+    let playerStatus = this.state.storage.player;
+    let enemies = this.state.storage.enemies;
+    let enemyObj = enemies.find(o => o.level === 10);
+    if(enemyObj == undefined){
+      enemyObj = {id: this.getId(enemy), level: this.getValue(enemy), hp:  this.getValue(enemy) * 10};
+      enemies.push(enemyObj);
+    } else {
+      console.log('enemy already listed');
+    }
+    enemies.map((element) => {
+      if(element.id == this.getId(enemy)){
+        element.hp -= playerStatus.atack;
+        playerStatus.hp -= element.level;
+        console.log('atack ', 'playerHP: ', playerStatus.hp, ' enemyHP: ', element.hp);
+      }
+      return element;
+    });
+
+    let gameState = this.state.storage;
+    gameState.enemies = enemies;
+    gameState.player = playerStatus;
+    this.setState({storage: gameState}, this.updateGameStatus());
+    // this.setValue(origin, 1);
+    // this.setValue(destination, this.state.storage.player.level + 39);
+    // this.scrollTo(destination);
+    // if(this.state.isDark)
+    //   this.setDarkness(destination);
   }
   getPlayer() {
     return document.querySelector('[value="40"]')
@@ -233,6 +266,7 @@ class Listener extends Component {
   updateGameStatus() {
     console.log('update game status');
     let gameStatus = this.state.storage;
+    console.log(gameStatus);
     this.getElementById('dc-level').innerHTML = gameStatus.player.level;
     this.getElementById('dc-hp').innerHTML = gameStatus.player.hp;
     this.getElementById('dc-atack').innerHTML = gameStatus.player.atack;
