@@ -202,7 +202,7 @@ class Board extends Component {
       <div className="status">
         <h4 style={{
             color: 'black'
-          }}>Level: 0</h4>
+          }}>Level: <span id="dc-level">0</span></h4>
         <h4 style={{
             color: 'green'
           }}>HP: 100</h4>
@@ -211,7 +211,7 @@ class Board extends Component {
           }}>Weapon: stick</h4>
         <h4 style={{
             color: 'red'
-          }}>Atack: 7</h4>    
+          }}>Atack: 7</h4>
         <p>
           <Button id="toggle-darkness">Toggle Darkness</Button>
         </p>

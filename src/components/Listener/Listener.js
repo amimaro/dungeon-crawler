@@ -19,7 +19,8 @@ class Listener extends Component {
     this.isPlayerView = this.isPlayerView.bind(this);
     this.setDarkness = this.setDarkness.bind(this);
     this.unsetDarkness = this.unsetDarkness.bind(this);
-    this.toggleDarkness = this.toggleDarkness.bind(this);    
+    this.toggleDarkness = this.toggleDarkness.bind(this);
+    this.setGameStatus = this.setGameStatus.bind(this);
 
     this.state.storage = {
       player: {
@@ -73,11 +74,9 @@ class Listener extends Component {
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyPress, false);
     document.getElementById('toggle-darkness').removeEventListener("click", this.handleKeyPress, false);
-    document.getElementById('reset').removeEventListener("click", this.handleKeyPress, false);
   }
   componentDidMount() {
     document.getElementById('toggle-darkness').addEventListener("click", this.toggleDarkness, false);
-    document.getElementById('reset').addEventListener("click", this.reset, false);
     this.setDarkness();
     this.scrollTo(this.getPlayer());
   }
@@ -211,6 +210,9 @@ class Listener extends Component {
       return element;
     });
     this.setState({isDark: false});
+  }
+  setGameStatus() {
+
   }
   render() {
     return (<div></div>);
