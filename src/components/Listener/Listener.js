@@ -21,13 +21,14 @@ class Listener extends Component {
     this.unsetDarkness = this.unsetDarkness.bind(this);
     this.toggleDarkness = this.toggleDarkness.bind(this);
     this.updateGameStatus = this.updateGameStatus.bind(this);
+    this.heal = this.heal.bind(this);
 
     this.state.storage = {
       player: {
         level: 1,
         xp: 0,
         hp: 100,
-        atack: 5
+        atack: 5,
       },
       enemies: {}
     };
@@ -105,24 +106,31 @@ class Listener extends Component {
       let player = this.getPlayer();
       let playerId = this.getId(player);
       let nextElement = this.getElementById(playerId + step);
-      switch (this.getValue(nextElement)) {
-        case 0:
-          console.log('wall');
-          break;
-        case 1:
-          console.log('path');
-          this.move(player, nextElement);
-          break;
+      let nextValue = this.getValue(nextElement);
+      if(nextValue == 0) { // if wall
+        console.log('wall');
+      } else if (nextValue == 1) { // if path
+        console.log('path');
+        this.move(player, nextElement);
+      } else if(nextValue >= 20 && nextValue <= 24) { // if heal
+        this.heal(1 + nextValue - 20);
+        this.move(player, nextElement);
       }
     }
   }
   move(origin, destination) {
     this.setValue(origin, 1);
-    this.setValue(destination, 40);
+    this.setValue(destination, this.state.storage.player.level + 39);
     this.scrollTo(destination);
     if(this.state.isDark)
       this.setDarkness(destination);
-    console.log('moved from: ', this.getId(origin), ' to: ', this.getId(destination));
+    console.log('move from: ', this.getId(origin), ' to: ', this.getId(destination));
+  }
+  heal(healId) {
+    console.log('heal');
+    let gameStatus = this.state.storage;
+    gameStatus.player.hp += healId;
+    this.setState({storage: gameStatus}, this.updateGameStatus());
   }
   getPlayer() {
     return document.querySelector('[value="40"]')
