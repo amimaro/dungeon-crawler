@@ -32,7 +32,7 @@ class Listener extends Component {
         hp: 100,
         atack: 20,
       },
-      enemies: []
+      enemies: [],
     };
   }
   componentWillMount() {
@@ -106,27 +106,25 @@ class Listener extends Component {
     }
     if (step != 0) {
       let player = this.getPlayer();
-      if(player != null){
-        let playerId = this.getId(player);
-        let nextElement = this.getElementById(playerId + step);
-        let nextValue = this.getValue(nextElement);
-        if(nextValue == 0) { // if wall
-          console.log('wall');
-        } else if (nextValue == 1) { // if path
-          console.log('path');
-          this.move(player, nextElement);
-        } else if(nextValue >= 20 && nextValue <= 24) { // if heal
-          this.heal(1 + nextValue - 20);
-          this.move(player, nextElement);
-        } else if(nextValue >= 30 && nextValue <= 34) { // if powerup
-          this.powerup(1 + nextValue - 30);
-          this.move(player, nextElement);
-        } else if(nextValue >= 10 && nextValue <= 15) { // if enemy
-          this.enemy(player, nextElement);
-        }
-      } else {
-        console.log('GAME OVER');
+      let playerId = this.getId(player);
+      let nextElement = this.getElementById(playerId + step);
+      let nextValue = this.getValue(nextElement);
+      if(nextValue == 0) { // if wall
+        console.log('wall');
+      } else if (nextValue == 1) { // if path
+        console.log('path');
+        this.move(player, nextElement);
+      } else if(nextValue >= 20 && nextValue <= 24) { // if heal
+        this.heal(1 + nextValue - 20);
+        this.move(player, nextElement);
+      } else if(nextValue >= 30 && nextValue <= 34) { // if powerup
+        this.powerup(1 + nextValue - 30);
+        this.move(player, nextElement);
+      } else if(nextValue >= 10 && nextValue <= 15) { // if enemy
+        this.enemy(player, nextElement);
       }
+    } else {
+      console.log('GAME OVER');
     }
   }
   move(origin, destination) {
@@ -155,7 +153,7 @@ class Listener extends Component {
     let enemies = this.state.storage.enemies;
     let enemyObj = enemies.find(o => o.id === this.getId(enemy));
     if(enemyObj == undefined){
-      enemyObj = {id: this.getId(enemy), level: this.getValue(enemy), hp:  this.getValue(enemy) * 10};
+      enemyObj = {id: this.getId(enemy), level: this.getValue(enemy) - 9, hp:  2**(this.getValue(enemy) - 7), atack: 2**(this.getValue(enemy) - 8)};
       enemies.push(enemyObj);
     } else {
       console.log('enemy already listed');
@@ -163,20 +161,40 @@ class Listener extends Component {
     enemies.map((element) => {
       if(element.id == this.getId(enemy)){
         element.hp -= playerStatus.atack;
-        playerStatus.hp -= element.level;
+        playerStatus.hp -= element.atack;
         if(playerStatus.hp <= 0) { // player dies
-          console.log('game over');
+          console.log('GAME OVER');
           this.setValue(player, 1);
+          document.removeEventListener("keydown", this.handleKeyPress, false);
         } else if(element.hp <= 0) { // enemy dies
           console.log('enemy killed');
           this.setValue(enemy, 1);
           this.move(player, enemy);
-          enemies.filter((element2) => {
-            if(element2.id == element.id){
-              return false;
-            }
-            return true;
-          });
+          if(this.getValue(enemy) == 15) {
+            console.log('BOSS KILLED');
+            document.removeEventListener("keydown", this.handleKeyPress, false);
+          }
+          playerStatus.xp += 2**element.level;
+          if(playerStatus.xp => 250 && playerStatus.xp < 6){
+            playerStatus.level = 6;
+            playerStatus.atack += 5;
+          }
+          if(playerStatus.xp => 200 && playerStatus.xp < 5){
+            playerStatus.level = 5;
+            playerStatus.atack += 5;
+          }
+          if(playerStatus.xp => 150 && playerStatus.xp < 4){
+            playerStatus.level = 4;
+            playerStatus.atack += 5;
+          }
+          if(playerStatus.xp => 100 && playerStatus.xp < 3){
+            playerStatus.level = 5;
+            playerStatus.atack += 5;
+          }
+          if(playerStatus.xp => 50 && playerStatus.xp < 2){
+            playerStatus.level = 2;
+            playerStatus.atack += 5;
+          }
         }
         console.log('atack ', 'playerHP: ', playerStatus.hp, ' enemyHP: ', element.hp);
       }
@@ -187,11 +205,6 @@ class Listener extends Component {
     gameState.enemies = enemies;
     gameState.player = playerStatus;
     this.setState({storage: gameState}, this.updateGameStatus());
-    // this.setValue(origin, 1);
-    // this.setValue(destination, this.state.storage.player.level + 39);
-    // this.scrollTo(destination);
-    // if(this.state.isDark)
-    //   this.setDarkness(destination);
   }
   getPlayer() {
     return document.querySelector('[value="40"]')
@@ -286,11 +299,9 @@ class Listener extends Component {
     let gameStatus = this.state.storage;
     console.log(gameStatus);
     this.getElementById('dc-level').innerHTML = gameStatus.player.level;
-    if(gameStatus.player.hp <= 0)
-      this.getElementById('dc-hp').innerHTML = 'Game Over. Please, press F5 to start a new game';
-    else
-      this.getElementById('dc-hp').innerHTML = gameStatus.player.hp;
+    this.getElementById('dc-hp').innerHTML = gameStatus.player.hp;
     this.getElementById('dc-atack').innerHTML = gameStatus.player.atack;
+    this.getElementById('dc-xp').innerHTML = 50 * gameStatus.player.level - gameStatus.player.xp;
   }
   render() {
     return (<div></div>);

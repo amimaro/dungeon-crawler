@@ -207,6 +207,9 @@ class Board extends Component {
             color: 'green'
           }}>HP: <span id="dc-hp">100</span></h4>
         <h4 style={{
+            color: 'black'
+          }}>Next Level: <span id="dc-xp">50</span></h4>
+        <h4 style={{
             color: 'red'
           }}>Atack: <span id="dc-atack">0</span></h4>
         <p>
