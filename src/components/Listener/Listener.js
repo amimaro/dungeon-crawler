@@ -175,23 +175,23 @@ class Listener extends Component {
             document.removeEventListener("keydown", this.handleKeyPress, false);
           }
           playerStatus.xp += 2**element.level;
-          if(playerStatus.xp => 250 && playerStatus.xp < 6){
+          if(playerStatus.xp >= 250 && playerStatus.xp < 6){
             playerStatus.level = 6;
             playerStatus.atack += 5;
           }
-          if(playerStatus.xp => 200 && playerStatus.xp < 5){
+          if(playerStatus.xp >= 200 && playerStatus.xp < 5){
             playerStatus.level = 5;
             playerStatus.atack += 5;
           }
-          if(playerStatus.xp => 150 && playerStatus.xp < 4){
+          if(playerStatus.xp >= 150 && playerStatus.xp < 4){
             playerStatus.level = 4;
             playerStatus.atack += 5;
           }
-          if(playerStatus.xp => 100 && playerStatus.xp < 3){
+          if(playerStatus.xp >= 100 && playerStatus.xp < 3){
             playerStatus.level = 5;
             playerStatus.atack += 5;
           }
-          if(playerStatus.xp => 50 && playerStatus.xp < 2){
+          if(playerStatus.xp >= 50 && playerStatus.xp < 2){
             playerStatus.level = 2;
             playerStatus.atack += 5;
           }
