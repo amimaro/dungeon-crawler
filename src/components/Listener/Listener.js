@@ -187,7 +187,6 @@ class Listener extends Component {
         } else if (element.hp <= 0) { // enemy dies
           console.log('enemy killed');
           this.setValue(enemy, 1);
-          this.move(player, enemy);
           if (this.getValue(enemy) === 15) {
             console.log('BOSS KILLED');
             document.removeEventListener("keydown", this.handleKeyPress, false);
@@ -196,31 +195,41 @@ class Listener extends Component {
           playerStatus.xp += 2 ** element.level + 2;
           this.displayEvent('+' + (
           2 ** element.level + 2) + ' XP');
-          if (playerStatus.xp >= 250 && playerStatus.level < 6) {
-            playerStatus.level = 6;
-            playerStatus.hp += 20;
-            playerStatus.atack += 5;
-          }
-          if (playerStatus.xp >= 200 && playerStatus.level < 5) {
-            playerStatus.level = 5;
-            playerStatus.hp += 20;
-            playerStatus.atack += 5;
-          }
-          if (playerStatus.xp >= 150 && playerStatus.level < 4) {
-            playerStatus.level = 4;
-            playerStatus.hp += 20;
-            playerStatus.atack += 5;
-          }
-          if (playerStatus.xp >= 100 && playerStatus.level < 3) {
-            playerStatus.level = 5;
-            playerStatus.hp += 20;
-            playerStatus.atack += 5;
-          }
-          if (playerStatus.xp >= 50 && playerStatus.level < 2) {
+
+          if (playerStatus.xp >= 50 && playerStatus.level == 1) {
             playerStatus.level = 2;
             playerStatus.hp += 20;
             playerStatus.atack += 5;
+            this.setValue(player, 41);
+            this.displayEvent('Level up!!');
+          } else if (playerStatus.xp >= 100 && playerStatus.level == 2) {
+            playerStatus.level = 3;
+            playerStatus.hp += 20;
+            playerStatus.atack += 5;
+            this.setValue(player, 42);
+            this.displayEvent('Level up!!');
+          } else if (playerStatus.xp >= 150 && playerStatus.level == 3) {
+            playerStatus.level = 4;
+            playerStatus.hp += 20;
+            playerStatus.atack += 5;
+            this.setValue(player, 43);
+            this.displayEvent('Level up!!');
+          } else if (playerStatus.xp >= 200 && playerStatus.level == 4) {
+            playerStatus.level = 5;
+            playerStatus.hp += 20;
+            playerStatus.atack += 5;
+            this.setValue(player, 44);
+            this.displayEvent('Level up!!');
+          } else if (playerStatus.xp >= 250 && playerStatus.level == 5) {
+            playerStatus.level = 6;
+            playerStatus.hp += 20;
+            playerStatus.atack += 5;
+            this.setValue(player, 44);
+            this.displayEvent('Level up!!');
           }
+
+          console.log(playerStatus.level, playerStatus.xp, element.level);
+          this.move(player, enemy);
         } else {
           this.displayEvent('enemy hp ' + element.hp);
         }
@@ -237,7 +246,12 @@ class Listener extends Component {
     }, this.updateGameStatus());
   }
   getPlayer() {
-    return document.querySelector('[value="40"]')
+    for(let level of [40,41,42,43,44]) {
+      let player = document.querySelector(`[value="${level}"]`);
+      if(player != null)
+        return player;
+    }
+    return null;
   }
   getId(element) {
     return parseInt(element.getAttribute('id'), 10);
