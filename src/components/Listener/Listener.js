@@ -31,7 +31,7 @@ class Listener extends Component {
         level: 1,
         xp: 0,
         hp: 100,
-        atack: 20,
+        atack: 5,
       },
       enemies: [],
     };
@@ -141,7 +141,7 @@ class Listener extends Component {
   heal(healId) {
     console.log('heal');
     let gameStatus = this.state.storage;
-    gameStatus.player.hp += healId;
+    gameStatus.player.hp += (5 * healId);
     this.setState({storage: gameStatus}, this.updateGameStatus());
   }
   powerup(powerId) {
@@ -182,22 +182,27 @@ class Listener extends Component {
           playerStatus.xp += 2**element.level;
           if(playerStatus.xp >= 250 && playerStatus.xp < 6){
             playerStatus.level = 6;
+            playerStatus.hp += 20;
             playerStatus.atack += 5;
           }
           if(playerStatus.xp >= 200 && playerStatus.xp < 5){
             playerStatus.level = 5;
+            playerStatus.hp += 20;
             playerStatus.atack += 5;
           }
           if(playerStatus.xp >= 150 && playerStatus.xp < 4){
             playerStatus.level = 4;
+            playerStatus.hp += 20;
             playerStatus.atack += 5;
           }
           if(playerStatus.xp >= 100 && playerStatus.xp < 3){
             playerStatus.level = 5;
+            playerStatus.hp += 20;
             playerStatus.atack += 5;
           }
           if(playerStatus.xp >= 50 && playerStatus.xp < 2){
             playerStatus.level = 2;
+            playerStatus.hp += 20;
             playerStatus.atack += 5;
           }
         }

@@ -38,7 +38,7 @@ class Board extends Component {
 
     // Enemies
     board = this.createElements(board, [
-      0.01, 0.02, 0.03, 0.03, 0.03
+      0.02, 0.02, 0.03, 0.03, 0.03
     ], [14, 13, 12, 11, 10]);
     // Heals
     board = this.createElements(board, [
