@@ -205,13 +205,10 @@ class Board extends Component {
           }}>Level: <span id="dc-level">0</span></h4>
         <h4 style={{
             color: 'green'
-          }}>HP: 100</h4>
-        <h4 style={{
-            color: 'black'
-          }}>Weapon: stick</h4>
+          }}>HP: <span id="dc-hp">100</span></h4>
         <h4 style={{
             color: 'red'
-          }}>Atack: 7</h4>
+          }}>Atack: <span id="dc-atack">0</span></h4>
         <p>
           <Button id="toggle-darkness">Toggle Darkness</Button>
         </p>
