@@ -24,6 +24,7 @@ class Listener extends Component {
     this.heal = this.heal.bind(this);
     this.powerup = this.powerup.bind(this);
     this.enemy = this.enemy.bind(this);
+    this.gameover = this.gameover.bind(this);
 
     this.state.storage = {
       player: {
@@ -166,6 +167,7 @@ class Listener extends Component {
           console.log('GAME OVER');
           this.setValue(player, 1);
           document.removeEventListener("keydown", this.handleKeyPress, false);
+          this.gameover('Game Over');
         } else if(element.hp <= 0) { // enemy dies
           console.log('enemy killed');
           this.setValue(enemy, 1);
@@ -173,6 +175,7 @@ class Listener extends Component {
           if(this.getValue(enemy) == 15) {
             console.log('BOSS KILLED');
             document.removeEventListener("keydown", this.handleKeyPress, false);
+            this.gameover('Congratulations!');
           }
           playerStatus.xp += 2**element.level;
           if(playerStatus.xp >= 250 && playerStatus.xp < 6){
@@ -302,6 +305,10 @@ class Listener extends Component {
     this.getElementById('dc-hp').innerHTML = gameStatus.player.hp;
     this.getElementById('dc-atack').innerHTML = gameStatus.player.atack;
     this.getElementById('dc-xp').innerHTML = 50 * gameStatus.player.level - gameStatus.player.xp;
+  }
+  gameover(msg) {
+    this.getElementById('panel-msg').innerHTML = msg;
+    this.getElementById('panel-display').style.display = 'block';
   }
   render() {
     return (<div></div>);

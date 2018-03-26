@@ -9,7 +9,7 @@
   left: 1%;
 }
 
-.panel {
+#panel-display {
   color: white;
   background: rgba(0,0,0,0.7);
   text-align: center;
