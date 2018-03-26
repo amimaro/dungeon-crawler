@@ -22,6 +22,7 @@ class Listener extends Component {
     this.toggleDarkness = this.toggleDarkness.bind(this);
     this.updateGameStatus = this.updateGameStatus.bind(this);
     this.heal = this.heal.bind(this);
+    this.powerup = this.powerup.bind(this);
 
     this.state.storage = {
       player: {
@@ -115,6 +116,9 @@ class Listener extends Component {
       } else if(nextValue >= 20 && nextValue <= 24) { // if heal
         this.heal(1 + nextValue - 20);
         this.move(player, nextElement);
+      } else if(nextValue >= 30 && nextValue <= 34) { // if powerup
+        this.powerup(1 + nextValue - 30);
+        this.move(player, nextElement);
       }
     }
   }
@@ -130,6 +134,12 @@ class Listener extends Component {
     console.log('heal');
     let gameStatus = this.state.storage;
     gameStatus.player.hp += healId;
+    this.setState({storage: gameStatus}, this.updateGameStatus());
+  }
+  powerup(powerId) {
+    console.log('powerUp');
+    let gameStatus = this.state.storage;
+    gameStatus.player.atack += powerId;
     this.setState({storage: gameStatus}, this.updateGameStatus());
   }
   getPlayer() {
