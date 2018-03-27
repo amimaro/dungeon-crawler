@@ -7,6 +7,7 @@
   position: absolute;
   top: 17%;
   left: 1%;
+  height: 400px;
 }
 
 #panel-display {
@@ -19,4 +20,100 @@
   left: 0;
   width: 100%;
   height: 510px;
+}
+
+.legend {
+  position: absolute;
+  bottom: 0;
+}
+
+.legend-items {
+  width: 50px;
+  height: 10px;
+  float: left;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-right: 5px;
+}
+
+.legend-item {
+  width: 10px;
+  height: 10px;
+  float: left;
+}
+
+.legend-text {
+  float: right;
+}
+
+#leg-boss {
+  background-color: INDIGO;
+}
+
+#leg-player-1 {
+  background-color: LIGHTSKYBLUE;
+}
+#leg-player-2 {
+  background-color: DEEPSKYBLUE;
+}
+#leg-player-3 {
+  background-color: DODGERBLUE;
+}
+#leg-player-4 {
+  background-color: ROYALBLUE;
+}
+#leg-player-5 {
+  background-color: MIDNIGHTBLUE;
+}
+
+#leg-enemy-1 {
+  background-color: LIGHTCORAL;
+}
+#leg-enemy-2 {
+  background-color: RED;
+}
+#leg-enemy-3 {
+  background-color: CRIMSON;
+}
+#leg-enemy-4 {
+  background-color: FIREBRICK;
+}
+#leg-enemy-5 {
+  background-color: DARKRED;
+}
+
+#leg-heal-1 {
+  background-color: PALEGREEN;
+}
+#leg-heal-2 {
+  background-color: MEDIUMSPRINGGREEN;
+}
+#leg-heal-3 {
+  background-color: MEDIUMSEAGREEN;
+}
+#leg-heal-4 {
+  background-color: FORESTGREEN;
+}
+#leg-heal-5 {
+  background-color: DARKGREEN;
+}
+
+#leg-power-1 {
+  background-color: GRAY;
+}
+#leg-power-2 {
+  background-color: DIMGRAY;
+}
+#leg-power-3 {
+  background-color: LIGHTSLATEGRAY;
+}
+#leg-power-4 {
+  background-color: SLATEGRAY;
+}
+#leg-power-5 {
+  background-color: DARKSLATEGRAY;
+}
+
+#leg-boss-1 {
+  background-color: INDIGO;
 }

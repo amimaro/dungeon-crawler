@@ -218,6 +218,54 @@ class Board extends Component {
         <h4 style={{
             color: 'black'
           }}><span id="dc-event">...</span></h4>
+        <div className="legend">
+          <div>
+              <div className="legend-items">
+                <div className="legend-item" id="leg-boss"></div>
+              </div>
+              <div className="legend-text">Boss</div>
+          </div>
+          <div>
+              <div className="legend-items">
+                <div className="legend-item" id="leg-player-1"></div>
+                <div className="legend-item" id="leg-player-2"></div>
+                <div className="legend-item" id="leg-player-3"></div>
+                <div className="legend-item" id="leg-player-4"></div>
+                <div className="legend-item" id="leg-player-5"></div>
+              </div>
+              <div className="legend-text">Player</div>
+          </div>
+          <div>
+              <div className="legend-items">
+                <div className="legend-item" id="leg-enemy-1"></div>
+                <div className="legend-item" id="leg-enemy-2"></div>
+                <div className="legend-item" id="leg-enemy-3"></div>
+                <div className="legend-item" id="leg-enemy-4"></div>
+                <div className="legend-item" id="leg-enemy-5"></div>
+              </div>
+              <div className="legend-text">Enemy</div>
+          </div>
+          <div>
+              <div className="legend-items">
+                <div className="legend-item" id="leg-heal-1"></div>
+                <div className="legend-item" id="leg-heal-2"></div>
+                <div className="legend-item" id="leg-heal-3"></div>
+                <div className="legend-item" id="leg-heal-4"></div>
+                <div className="legend-item" id="leg-heal-5"></div>
+              </div>
+              <div className="legend-text">Heal</div>
+          </div>
+          <div>
+              <div className="legend-items">
+                <div className="legend-item" id="leg-power-1"></div>
+                <div className="legend-item" id="leg-power-2"></div>
+                <div className="legend-item" id="leg-power-3"></div>
+                <div className="legend-item" id="leg-power-4"></div>
+                <div className="legend-item" id="leg-power-5"></div>
+              </div>
+              <div className="legend-text">Power</div>
+          </div>
+        </div>
       </div>
       <div id="panel-display" style={{display : 'none'}}>
         <h1 id="panel-msg">Test</h1>
