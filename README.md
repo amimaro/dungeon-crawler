@@ -2,7 +2,9 @@
 ## freeCodeCamp - Data Visualization
 ## React Projects: [Build a Roguelike Dungeon Crawler Game](https://www.freecodecamp.org/challenges/build-a-roguelike-dungeon-crawler-game)
 
-### Getting started
+![Dungeon Crawler](ss/dungeon.png)
+
+### Development: Getting started
 
 #### `npm start`
 
