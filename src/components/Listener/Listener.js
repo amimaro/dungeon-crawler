@@ -221,7 +221,8 @@ class Listener extends Component {
             this.setValue(player, 44);
             this.displayEvent('Level up!!');
           } else if (playerStatus.xp >= 250 && playerStatus.level == 5) {
-            playerStatus.level = 6;
+            playerStatus.xp -= 50;
+            playerStatus.level = 5;
             playerStatus.hp += 20;
             playerStatus.atack += 5;
             this.setValue(player, 44);
