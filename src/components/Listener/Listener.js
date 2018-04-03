@@ -186,12 +186,12 @@ class Listener extends Component {
           this.gameover('Game Over');
         } else if (element.hp <= 0) { // enemy dies
           console.log('enemy killed');
-          this.setValue(enemy, 1);
           if (this.getValue(enemy) === 15) {
             console.log('BOSS KILLED');
             document.removeEventListener("keydown", this.handleKeyPress, false);
             this.gameover('Congratulations!');
           }
+          this.setValue(enemy, 1);
           playerStatus.xp += 2 ** element.level + 2;
           this.displayEvent('+' + (
           2 ** element.level + 2) + ' XP');
