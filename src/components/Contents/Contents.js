@@ -9,6 +9,11 @@ class Contents {
       return true;
     return false;
   }
+  isWall(block) {
+    if(block === 0)
+      return true;
+    return false;
+  }
   getBlocks() {
     let blocks = Array(40).fill('black');
     blocks[0] = 'LIGHTGRAY'; // Wall
