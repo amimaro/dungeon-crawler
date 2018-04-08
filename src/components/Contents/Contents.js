@@ -1,4 +1,14 @@
 class Contents {
+  isPath(block) {
+    if(block === 1)
+      return true;
+    return false;
+  }
+  isHeal(block) {
+    if(block >= 20 && block <= 24)
+      return true;
+    return false;
+  }
   getBlocks() {
     let blocks = Array(40).fill('black');
     blocks[0] = 'LIGHTGRAY'; // Wall
