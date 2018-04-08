@@ -1,4 +1,9 @@
 class Contents {
+  isWall(block) {
+    if(block === 0)
+    return true;
+    return false;
+  }
   isPath(block) {
     if(block === 1)
       return true;
@@ -9,8 +14,8 @@ class Contents {
       return true;
     return false;
   }
-  isWall(block) {
-    if(block === 0)
+  isPowerUp(block) {
+    if(block >= 30 && block <= 34)
       return true;
     return false;
   }
