@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 
+import Contents from '../Contents/Contents';
+
 class Listener extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      blocks: Array(40).fill('black'),
       isDark: true
     }
 
@@ -38,43 +39,10 @@ class Listener extends Component {
     };
   }
   componentWillMount() {
-    let blocks = this.state.blocks;
-
-    blocks[0] = 'LIGHTGRAY';
-    blocks[1] = 'WHITE';
-    blocks[2] = 'BLACK';
-
-    // Enemies
-    blocks[10] = 'LIGHTCORAL';
-    blocks[11] = 'RED';
-    blocks[12] = 'CRIMSON';
-    blocks[13] = 'FIREBRICK';
-    blocks[14] = 'DARKRED';
-    blocks[15] = 'INDIGO'; // Boss
-
-    // Heals
-    blocks[20] = 'PALEGREEN';
-    blocks[21] = 'MEDIUMSPRINGGREEN';
-    blocks[22] = 'MEDIUMSEAGREEN';
-    blocks[23] = 'FORESTGREEN';
-    blocks[24] = 'DARKGREEN';
-
-    // Weapons
-    blocks[30] = 'GRAY';
-    blocks[31] = 'DIMGRAY';
-    blocks[32] = 'LIGHTSLATEGRAY';
-    blocks[33] = 'SLATEGRAY';
-    blocks[34] = 'DARKSLATEGRAY';
-
-    // Player
-    blocks[40] = 'LIGHTSKYBLUE';
-    blocks[41] = 'DEEPSKYBLUE';
-    blocks[42] = 'DODGERBLUE';
-    blocks[43] = 'ROYALBLUE';
-    blocks[44] = 'MIDNIGHTBLUE';
+    this.blocks = new Contents().getBlocks();
 
     document.addEventListener("keydown", this.handleKeyPress, false);
-    this.setState({blocks: blocks, value: this.props.value})
+    this.setState({value: this.props.value})
   }
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyPress, false);
@@ -265,7 +233,7 @@ class Listener extends Component {
   }
   setValue(element, value) {
     element.setAttribute('value', value);
-    element.style.backgroundColor = this.state.blocks[value];
+    element.style.backgroundColor = this.blocks[value];
   }
   scrollTo(element) {
     let elementId = this.getId(element);
@@ -324,9 +292,9 @@ class Listener extends Component {
     let player = this.getPlayer();
     Array.from(document.getElementsByClassName('board-element')).map((element) => {
       if (this.isPlayerView(player, element))
-        element.style.backgroundColor = this.state.blocks[this.getValue(element)];
+        element.style.backgroundColor = this.blocks[this.getValue(element)];
       else
-        element.style.backgroundColor = this.state.blocks[2];
+        element.style.backgroundColor = this.blocks[2];
       return element;
     });
     this.setState({isDark: true});
@@ -334,7 +302,7 @@ class Listener extends Component {
   unsetDarkness() {
     console.log('unset darkness');
     Array.from(document.getElementsByClassName('board-element')).map((element) => {
-      element.style.backgroundColor = this.state.blocks[this.getValue(element)];
+      element.style.backgroundColor = this.blocks[this.getValue(element)];
       return element;
     });
     this.setState({isDark: false});

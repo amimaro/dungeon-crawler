@@ -3,6 +3,8 @@ import './Board.css';
 import Block from '../Block/Block';
 import {Button} from 'react-bootstrap';
 
+import Contents from '../Contents/Contents';
+
 class Board extends Component {
   constructor(props) {
     super(props);
