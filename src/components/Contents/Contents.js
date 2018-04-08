@@ -19,6 +19,11 @@ class Contents {
       return true;
     return false;
   }
+  isEnemy(block) {
+    if(block >= 10 && block <= 15)
+      return true;
+    return false;
+  }
   getBlocks() {
     let blocks = Array(40).fill('black');
     blocks[0] = 'LIGHTGRAY'; // Wall
