@@ -37,9 +37,11 @@ class Listener extends Component {
       },
       enemies: []
     };
+
+    this.contents = new Contents();
   }
   componentWillMount() {
-    this.blocks = new Contents().getBlocks();
+    this.blocks = this.contents.getBlocks();
 
     document.addEventListener("keydown", this.handleKeyPress, false);
     this.setState({value: this.props.value})
@@ -81,18 +83,18 @@ class Listener extends Component {
       let playerId = this.getId(player);
       let nextElement = this.getElementById(playerId + step);
       let nextValue = this.getValue(nextElement);
-      if (nextValue === 0) { // if wall
+      if (this.contents.isWall(nextValue)) {
         console.log('wall');
-      } else if (nextValue === 1) { // if path
+      } else if (this.contents.isPath(nextValue)) {
         console.log('path');
         this.move(player, nextElement);
-      } else if (nextValue >= 20 && nextValue <= 24) { // if heal
+      } else if (this.contents.isHeal(nextValue)) {
         this.heal(1 + nextValue - 20);
         this.move(player, nextElement);
-      } else if (nextValue >= 30 && nextValue <= 34) { // if powerup
+      } else if (this.contents.isPowerUp(nextValue)) {
         this.powerup(1 + nextValue - 30);
         this.move(player, nextElement);
-      } else if (nextValue >= 10 && nextValue <= 15) { // if enemy
+      } else if (this.contents.isEnemy(nextValue)) {
         this.enemy(player, nextElement);
       }
     } else {
